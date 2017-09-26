@@ -1,0 +1,27 @@
+/*@font-face {*/
+    /*font-family: 'material-font';*/
+    /*src: url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.eot'); !* IE9 Compat Modes *!*/
+    /*src: url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.eot#iefix') format('embedded-opentype'), !* IE6-IE8 *!*/
+    /*url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.woff') format('woff'), !* Modern Browsers *!*/
+    /*url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.woff') format('woff2'), !* Modern Browsers *!*/
+    /*url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.ttf') format('truetype'), !* Safari, Android, iOS *!*/
+    /*url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.svg') format('svg'); !* Legacy iOS *!}*/
+
+
+
+/*@font-face {*/
+    /*font-family: 'roboto';*/
+    /*src: url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.eot'); !* IE9 Compat Modes *!*/
+    /*src: url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.eot#iefix') format('embedded-opentype'), !* IE6-IE8 *!*/
+    /*url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.woff') format('woff'), !* Modern Browsers *!*/
+    /*url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.woff') format('woff2'), !* Modern Browsers *!*/
+    /*url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.ttf') format('truetype'), !* Safari, Android, iOS *!*/
+    /*url('./MaterialDesign-Webfont-master/fonts/materialdesignicons-webfont.svg') format('svg'); !* Legacy iOS *!}*/
+
+
+
+
+
+*{
+    font-family: 'Roboto', sans-serif;
+}

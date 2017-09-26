@@ -1,0 +1,284 @@
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MathonGo Library</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="./library.css">
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script src="/js/tether.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="./library.js"></script>
+
+    <script>
+
+    let logoutfn = function () {
+
+        $.ajax({
+            url: '/logout',
+            headers: {"Authorization": "Bearer " + localStorage.token},
+            method: "GET"
+        }).done(function (user) {
+            localStorage.removeItem("token");
+            window.location.replace(user.url);
+        });
+    }
+    </script>
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="row no-gutters align-content-center header-bar" id="header-bar">
+        <div class="col-sm-2 col-12">
+            <img src="../images/logo.png" class="header-logo">
+        </div>
+        <div class="col-sm-3 offset-2 col-12">
+            <!--empty for search text box later-->
+        </div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="header-links align-middle" href="/library">Library</a></div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="align-middle header-links" href="#">Events</a></div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="align-middle header-links" href="#">Teachers</a></div>
+
+
+        <div id="userDetails" class="dropdown col-sm-2 col-12 align-middle header-dropdown">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <a href="#"><i class="fa fa-bell"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+            &nbsp;&nbsp;&nbsp;<a style="color: #222;" href="#" class="dropdown-toggle header-links"
+                                             data-toggle="dropdown"
+                                             role="button" aria-haspopup="true" aria-expanded="false">
+            <img src="/images/boy.png" class="img-circle header-profile-img">
+            <span id="name"></span> <span class="caret"></span></a>
+            <ul class="dropdown-menu header-dropdown-menu">
+                <li class="header-dropdown-menu-li"><a href="/student/mycourses"
+                                                       class="header-links">My Courses</a></li>
+                <li class="header-dropdown-menu-li"><a href="/student/mybookmarks"
+                                                       class="header-links">My Bookmarks</a></li>
+                <li class="header-dropdown-menu-li"><a onclick="logoutfn()" class="header-links" style="color: #999;">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <!--<div class="col-sm-6 text-right">-->
+
+        <!--<span id="userName" class="align-middle text-uppercase"></span>-->
+        <!--<a id="logout" onclick="logoutfn()"><i data-toggle="tooltip" title="Logout" data-placement="bottom"-->
+        <!--style="color: #555"-->
+        <!--class="fa fa-sign-out fa-2x align-middle"></i></a>-->
+        <!--</div>-->
+
+    </div>
+    <header class="jumbotron header-jumbotron">
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-xs-12 col-sm-6 offset-3 text-center">
+                    <h1 style="color: floralwhite;font-size: 42px" class="jumbotron-title">Library</h1>
+                    <br>
+                    <p class="jumbotron-description" style="color: floralwhite; font-size: 22px">Browse our collection of courses created by the
+                        best teachers of India</p>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div id="allFilters" class="row filter-column">
+                <!--<div class="filter-column-divs">-->
+                <!--<div class="filter-column-divs-heading"><b>EXAMINATION</b></div>-->
+                <!--<div class="filter-column-divs-content">-->
+                <!--<label class="label-style">-->
+                <!--<input name="examination" value="" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;JEE Mains<br/>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input name="examination" value="" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;JEE Advanced<br/>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input name="examination" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;CBSE<br>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs">-->
+                <!--<div class="filter-column-divs-heading"><b>SUBJECT</b>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs-content">-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Mathematics<br/>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Physics<br>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Chemistry<br>-->
+                <!--</label>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs">-->
+                <!--<div class="filter-column-divs-heading"><b>CLASS</b></div>-->
+                <!--<div class="filter-column-divs-content">-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;XI<br/>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;XII<br>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;XII +<br>-->
+                <!--</label>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs">-->
+                <!--<div class="filter-column-divs-heading"><b>DIFFICULTY</b></div>-->
+                <!--<div class="filter-column-divs-content">-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Beginner<br/>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Intermediate<br>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Advanced<br>-->
+                <!--</label>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs">-->
+                <!--<div class="filter-column-divs-heading"><b>MEDIUM</b></div>-->
+                <!--<div class="filter-column-divs-content">-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;English<br/>-->
+                <!--</label>-->
+                <!--<br>-->
+                <!--<label class="label-style">-->
+                <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Hindi<br>-->
+                <!--</label>-->
+
+                <!--</div>-->
+                <!--</div>-->
+                <!--duration filter in the comments section-->
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row filter-bar">
+                <div class="col-sm-1 filter-bar-title"><b>FILTERS</b></div>
+                <div class="col-sm-9">
+                    <ul id="filterTabs" class="filter-bar-ul">
+
+                    </ul>
+                </div>
+                <div class="col-sm-2 text-right filter-bar-clearall" onclick="window.location.replace('/library')">CLEAR ALL</div>
+            </div>
+            <div class="row minicourses">
+
+                <ul class="minicourses-list" id="minicourses-list">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br><br><br><br><br><br>
+</body>
+</html>
+
+
+<!---->
+<!--<label class="">-->
+<!--<input type="checkbox"> JEE Mains<br/>-->
+<!--</label>-->
+<!--<label class="">-->
+<!--<input type="checkbox"> JEE Advanced<br>-->
+<!--</label>-->
+<!--<br>-->
+<!--<label class="">-->
+<!--<input type="checkbox"> CBSE<br>-->
+<!--</label>-->
+
+
+<!--M2-->
+
+<!--<br><br>-->
+<!--<div>-->
+
+<!--<input type="checkbox"> JEE Mains-->
+<!--<br>-->
+<!--<input type="checkbox"> JEE Advanced-->
+<!--<br>-->
+<!--<input type="checkbox"> CBSE-->
+<!--<br>-->
+<!--</div>-->
+<!--<br>-->
+<!--&lt;!&ndash;M3-->
+<!-- -                    I prefer this method the most-->
+<!-- - -->
+<!-- -                &ndash;&gt;-->
+
+
+<!--<div class="form-check">-->
+<!--<label class="form-check-label">-->
+<!--<input type="checkbox"> JEE Mains<br/>-->
+<!--</label>-->
+<!--<label class="form-check-label">-->
+<!--<input type="checkbox"> JEE Advanced<br>-->
+<!--</label>-->
+<!--<br>-->
+<!--<label class="form-check-label">-->
+<!--<input type="checkbox"> CBSE<br>-->
+<!--</label>-->
+<!--</div>-->
+
+<!--M4-->
+
+<!--<div class="form-check">-->
+<!--<label class="form-check-label ">-->
+<!--<input type="checkbox"> JEE Mains<br/>-->
+<!--</label>-->
+<!--<label class="form-check-label">-->
+<!--<input type="checkbox"> JEE Advanced<br>-->
+<!--</label>-->
+<!--<br>-->
+<!--<label class="form-check-label">-->
+<!--<input type="checkbox"> CBSE<br>-->
+<!--</label>-->
+<!--</div>-->
+<!--<label class="">-->
+<!--<input type="checkbox"> JEE Mains<br>-->
+<!--</label>-->
+<!--<br>-->
+<!--<label class="">-->
+<!--<input type="checkbox"> JEE Advanced<br>-->
+<!--</label>-->
+<!--<br>-->
+<!--<label class="">-->
+<!--<input type="checkbox"> CBSE<br>-->
+<!--</label>-->
+
+
+<!--DURATION-->
+<!--<div style="width: 100%;height: auto;border-bottom: solid 2px #EEE;">-->
+<!--<div style="padding: 20px;padding-bottom: 15px; padding-left: 30px;width: 100%"><b>DURATION</b>-->
+<!--</div>-->
+<!--<div style="padding-left: 30px;padding-right: 30px;padding-bottom: 13px; height: 45px">-->
+<!--<label class="label-style" style="width: 100%">-->
+<!--<input type="range" min="0" max="120" style="width: 100%">&nbsp;&nbsp;&nbsp;&nbsp;<br/>-->
+<!--</label>-->
+<!--</div>-->
+<!--</div> -->

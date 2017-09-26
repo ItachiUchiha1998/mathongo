@@ -1,0 +1,56 @@
+body, html {
+    background-color: whitesmoke;
+    height: 100%; !important;
+}
+.container{
+    height: 100%;  !important;
+}
+
+*{
+    word-wrap:break-word;
+}
+
+h5{
+    font-size: 16px;
+}
+
+.container-fluid{
+    /*height: 100%;  !important;*/
+    padding: 0;
+    margin: 0;
+}
+.row{
+    /*min-width: 100%;*/
+    margin: 0;
+    margin-bottom: 30px;
+}
+.headerbar{
+    /*height:60px;*/
+    background-color: white;
+
+    z-index: 10;
+}
+
+.header-links:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+.header-links:focus{
+    text-decoration: none;
+}
+
+.dropdown-menu{
+    left:10%; !important;
+}
+
+.jumbotron{
+    border-radius: 0;
+}
+.btn-style:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+#logout{
+    cursor: pointer;
+}
+/*border-bottom: solid 2px #EEEEEE;*/

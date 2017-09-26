@@ -1,0 +1,37 @@
+{
+  "name": "mathongo2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apoorvaagupta/MathonGo-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apoorvaagupta/MathonGo-2/issues"
+  },
+  "homepage": "https://github.com/apoorvaagupta/MathonGo-2#readme",
+  "dependencies": {
+    "are-we-there-yet": "^1.1.4",
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "express-hbs": "^1.0.4",
+    "express-session": "^1.15.3",
+    "passport": "^0.3.2",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^6.4.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.3.1",
+    "uid2": "0.0.3"
+  }
+}

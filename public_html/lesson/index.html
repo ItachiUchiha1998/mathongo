@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="./index.css">
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script src="/js/tether.js"></script>
+    <script src="/js/bootstrap.js"></script>
+
+    <script src="./index.js"></script>
+    <script>
+
+        let logoutfn = function () {
+
+            $.ajax({
+                url: '/logout',
+                headers: {"Authorization": "Bearer " + localStorage.token},
+                method: "GET"
+            }).done(function (user) {
+                localStorage.removeItem("token");
+                window.location.replace(user.url);
+            });
+        }
+    </script>
+</head>
+<body>
+
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="Report Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="margin: 0 auto">Report A Bug</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="report-modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <textarea id="report-description" rows="4" style="width: 100%;resize: none;padding: 5px" placeholder="Tell us about your issue."></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <a id="submit-report" class="btn btn-success text-uppercase"
+                   style="background-color:#4bca81;padding: 10px 45px;color: white;font-size: 12px;font-weight:
+                    700;cursor: pointer;width: auto;border-radius: 100px">Submit</a>
+
+                <!--<button type="button" class="btn btn-primary">Submit</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reportSubmitModal" tabindex="-1" role="dialog" aria-labelledby="Report Submit Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="margin: 0 auto">Report A Bug</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: auto">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="submit-report-msg">Thank you for helping us improve.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+
+    <div class="row no-gutters align-content-center headerbar" id="headerbar"
+         style="height: auto; padding-top: 10px; padding-bottom: 10px">
+        <div class="col-sm-2 col-12">
+            <img src="/images/logo.png" style="height: 40px; padding-left: 30px">
+        </div>
+        <div class="col-sm-3 offset-2 col-12">
+            <!--empty for search text box later-->
+        </div>
+        <div class=" col-sm-1 col-12 align-middle" style="padding-top: 5px; padding-bottom: 5px"><a
+                class="header-links align-middle" style="text-align: center; color: #999"
+                href="/library">Library</a></div>
+        <div class=" col-sm-1 col-12 align-middle" style="padding-top: 5px; padding-bottom: 5px"><a
+                class="align-middle header-links" style="text-align: center; color: #999" href="#">Events</a></div>
+        <div class=" col-sm-1 col-12 align-middle" style="padding-top: 5px; padding-bottom: 5px"><a
+                class="align-middle header-links" style="text-align: center; color: #999" href="#">Teachers</a></div>
+
+
+        <div class="dropdown col-sm-2 col-12 align-middle" style=" padding-top: 5px; padding-bottom: 5px">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <a href="#"><i class="fa fa-bell"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #222;" href="#" class="dropdown-toggle header-links "
+                                             data-toggle="dropdown"
+                                             role="button" aria-haspopup="true" aria-expanded="false"><img
+                src="/images/boy.png" style="height: 30px; border-radius: 50%; border: solid 1px gray"
+                class="img-circle">
+            <span id="name"></span> <span class="caret"></span></a>
+            <ul class="dropdown-menu"
+                style="padding: 0; margin-top:10px; border: none; border-radius: 0;border-bottom-right-radius: .25rem;border-bottom-left-radius: .25rem;background-color: #FFF">
+                <li style="padding: 10px ;padding-left: 20px; border-bottom: solid 1px #DDD"><a style="color: #666"
+                                                                                                href="/student/mycourses"
+                                                                                                class="header-links">My
+                    Courses</a></li>
+                <li style="padding: 10px;padding-left: 20px; border-bottom: solid 1px #DDD"><a style="color: #666"
+                                                                                               href="/student/mybookmarks"
+                                                                                               class="header-links">My
+                    Bookmarks</a></li>
+                <li style="padding: 10px;padding-left: 20px;"><a onclick="logoutfn()" style="color: #666"
+                                                                 class="header-links">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <!--<div class="col-sm-6 text-right">-->
+
+        <!--<span id="userName" class="align-middle text-uppercase"></span>-->
+        <!--<a id="logout" onclick="logoutfn()"><i data-toggle="tooltip" title="Logout" data-placement="bottom"-->
+        <!--style="color: #555"-->
+        <!--class="fa fa-sign-out fa-2x align-middle"></i></a>-->
+        <!--</div>-->
+
+    </div>
+
+</div>
+
+<div class="container" style="margin-top: 30px">
+
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div id="lessons" class="row"
+                 style="background-color: white; box-shadow: #DDD 0 0px 8px 1px ; border-radius: .125rem; margin-bottom: 30px">
+                <div class="col-sm-12" style="height: auto;padding: 20px;border-bottom: solid 2px #EEEEEE;">
+                    <h5 id="miniCourseName" style="font-size: 18px;margin-bottom: 7px; color: #444; font-weight: 500; cursor: pointer"><br></h5>
+                    <p style="font-size: 12px;font-weight: 400;margin-bottom: 0px;color: #A4A5A9">
+                        <span id="noOfLessons" style="margin-top: 5px; font-weight: 500"></span>&nbsp;&nbsp;
+                        <span id="miniCourseDuration" style="margin-top: 5px; font-weight: 500"></span>
+                    </p>
+                </div>
+
+                <!--<div class="col-sm-12" style="height: auto;padding: 20px;border-bottom: solid 2px #EEEEEE;">-->
+                <!--<h5 style="font-size: 18px;margin-bottom: 7px;font-weight: 500;color: #A4A5A9">1. Functions<br></h5>-->
+
+                <!--</div>-->
+
+
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="row"
+                 style="background-color: white; height:auto; box-shadow: #DDD 0 0 8px 1px ; border-radius: .125rem">
+                <div class="col-sm-12 embed-responsive embed-responsive-16by9">
+                    <iframe id="video" class="embed-responsive-item" src=""
+                     frameborder="0"       allowfullscreen></iframe>
+                </div>
+
+                <div class="col-sm-12" style="height: auto;padding: 20px;border-bottom: solid 2px #EEEEEE;">
+                    <div class="row" style="margin-bottom: 0px">
+                        <div class="col-sm-8">
+                            <h5 id="nameOfTheMiniCourse" style="font-size: 18px;margin-bottom: 7px; color: #444; font-weight: 500"><br>
+                            </h5>
+                            <p style="font-size: 12px;font-weight: 400;margin-bottom: 0px;color: #A4A5A9">
+                                <img src="/images/icons/timer.png">&nbsp;<span id="durationOfMiniCourse"
+                                                                               style="margin-top: 5px; font-weight: 500"></span>&nbsp;&nbsp;
+                                <img src="/images/thumb-up-gray.png">&nbsp;<span id="totalUpvotes"
+                                                                             style="margin-top: 5px; font-weight: 500"></span>
+                            </p>
+                            <br>
+                            <p id="lessonDescription"
+                               style="font-size: 14px;font-weight: 400;margin-bottom: 0px;color: #A4A5A9">
+
+                            </p></div>
+                        <div class="col-sm-4 text-center" style="">
+                            <div style="height: 50px; margin-bottom: 15px">
+                                <span id="upvote" style="font-size: 13px;font-weight: 500;margin-bottom: 0px;color: #A4A5A9; cursor: pointer"><img  id="upvote-logo" src="/images/thumb-up-gray.png"> <span id="upvote-text">Upvote</span></span>
+                                <span id="report" style="font-size: 13px;font-weight: 500;margin-bottom: 0px;color: #A4A5A9; cursor: pointer"><img src="/images/report.png"> Report</span>
+                            </div>
+                            <a id="bookmark" class="btn btn-success text-uppercase"
+                               style="background-color:#4bca81;padding: 10px 45px;color: white;font-size: 12px;font-weight: 700;cursor: pointer;width: auto;border-radius: 100px">BOOKMARK</a>
+                            <p id="msg" style="padding-top: 5px;margin-bottom: 3px;font-size: 14px"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12" style="height: auto;padding: 20px;border-bottom: solid 2px #EEEEEE;">
+                    <div class="row" style="margin-bottom: 0px">
+                        <div class="col-sm-12">
+                            <p><b>Teacher</b></p></div>
+                        <div class="col-sm-2">
+                            <img id="teacherImage" style="border-radius: 50%; height: 75px" alt="Tutor Image" src="/images/user-image.jpg">
+                        </div>
+                        <div class="col-sm-10">
+                            <p style="color: #848589;font-size: 14px;"><b><span id="nameOfTheTeacher"></span></b><br>
+                                <span id="teacherDescription"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="disqus_thread"></div>
+                    <div id="script">
+
+                        <script id="runscript"></script> 
+
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                    </div>                        
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+
+</html>

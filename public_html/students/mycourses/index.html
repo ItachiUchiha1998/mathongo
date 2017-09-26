@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>My Courses</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="index.css">
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script src="/js/tether.js"></script>
+    <script src="/js/bootstrap.js"></script>
+
+    <script>
+
+        let logoutfn = function () {
+
+            $.ajax({
+                url: '/logout',
+                headers: {"Authorization": "Bearer " + localStorage.token},
+                method: "GET"
+            }).done(function (user) {
+                localStorage.removeItem("token");
+                window.location.replace(user.url);
+            });
+        }
+    </script>
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="row no-gutters align-content-center header-bar" id="header-bar">
+        <div class="col-sm-2 col-12">
+            <img src="/images/logo.png" class="header-logo">
+        </div>
+        <div class="col-sm-3 offset-2 col-12">
+            <!--empty for search text box later-->
+        </div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="header-links align-middle" href="/library">Library</a></div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="align-middle header-links" href="#">Events</a></div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="align-middle header-links" href="#">Teachers</a></div>
+
+
+        <div class="dropdown col-sm-2 col-12 align-middle header-dropdown">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <a href="#"><i class="fa fa-bell"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+            &nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #222;" href="#" class="dropdown-toggle header-links"
+                                             data-toggle="dropdown"
+                                             role="button" aria-haspopup="true" aria-expanded="false">
+            <img src="/images/boy.png" class="img-circle header-profile-img">
+            <span id="name"></span> <span class="caret"></span></a>
+            <ul class="dropdown-menu header-dropdown-menu">
+                <li class="header-dropdown-menu-li"><a href="/student/mycourses" class="header-links">My Courses</a></li>
+                <li class="header-dropdown-menu-li"><a href="/student/mybookmarks" class="header-links">My Bookmarks</a></li>
+                <li class="header-dropdown-menu-li"><a onclick="logoutfn()" class="header-links" style="color: #999;">Logout</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <header class="jumbotron header-jumbotron">
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-xs-12 col-sm-6 offset-3 text-center">
+                    <h1 class="jumbotron-title">My Courses</h1>
+                    <br>
+                    <p class="jumbotron-description">Browse through all the courses that you enrolled in</p>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div class="container">
+    <div class="row">
+        <!--<div class="col-sm-3">-->
+            <!--<div class="row filter-column">-->
+                <!--<div class="filter-column-divs">-->
+                    <!--<div class="filter-column-divs-heading"><b>EXAMINATION</b></div>-->
+                    <!--<div class="filter-column-divs-content">-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;JEE Mains<br/>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;JEE Advanced<br/>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;CBSE<br>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs">-->
+                    <!--<div class="filter-column-divs-heading"><b>SUBJECT</b>-->
+                    <!--</div>-->
+                    <!--<div class="filter-column-divs-content">-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Mathematics<br/>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Physics<br>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Chemistry<br>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs">-->
+                    <!--<div class="filter-column-divs-heading"><b>CLASS</b></div>-->
+                    <!--<div class="filter-column-divs-content">-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;XI<br/>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;XII<br>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;XII +<br>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs">-->
+                    <!--<div class="filter-column-divs-heading"><b>DIFFICULTY</b></div>-->
+                    <!--<div class="filter-column-divs-content">-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Beginner<br/>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Intermediate<br>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Advanced<br>-->
+                        <!--</label>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="filter-column-divs">-->
+                    <!--<div class="filter-column-divs-heading"><b>MEDIUM</b></div>-->
+                    <!--<div class="filter-column-divs-content">-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;English<br/>-->
+                        <!--</label>-->
+                        <!--<br>-->
+                        <!--<label class="label-style">-->
+                            <!--<input type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;Hindi<br>-->
+                        <!--</label>-->
+
+                    <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;duration filter in the comments section&ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="col-sm-10 offset-1">
+            <!--<div class="row filter-bar">-->
+                <!--<div class="col-sm-1 filter-bar-title"><b>FILTERS</b></div>-->
+                <!--<div class="col-sm-9">-->
+                    <!--<ul class="filter-bar-ul">-->
+                        <!--<li class="filter-bar-ul-li"><span class="filter-bar-ul-li-filter">Physics</span>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+                <!--<div class="col-sm-2 text-right filter-bar-clearall">CLEAR ALL</div>-->
+            <!--</div>-->
+            <div class="row minicourses">
+
+                <ul class="minicourses-list" id="minicourses-list">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br><br><br><br><br><br>
+<script src="index.js"></script>
+</body>
+</html>
+

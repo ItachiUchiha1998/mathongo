@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MiniCourse</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="./index.css">
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script src="/js/tether.js"></script>
+    <script src="/js/bootstrap.js"></script>
+
+    <!--For Star Rating-->
+    <script src="/js/jRate.js"></script>
+
+    <script src="./index.js"></script>
+    <script>
+
+      let logoutfn = function () {
+
+        $.ajax({
+          url: '/logout',
+          headers: {"Authorization": "Bearer " + localStorage.token},
+          method: "GET"
+        }).done(function (user) {
+          localStorage.removeItem("token");
+          window.location.replace(user.url);
+        });
+      }
+    </script>
+</head>
+<body>
+
+
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="Review Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none">
+                <h5 class="modal-title" style="margin: 0 auto; font-size: 18px">Add Your Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="padding:0px 15px">
+                    <div id="jRate-add-review"></div>
+                    <span style="padding-top: 5px;margin-left: 10px; color:  #1589EE" id="review-type">Very Good</span>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <textarea id="review-description" rows="4" style="width: 100%;resize: none;padding: 5px" placeholder="Tell others about your experience with this course."></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer" style="border: none">
+                <a id="submit-review" class="btn btn-success text-uppercase"
+                   style="background-color:#4bca81;padding: 10px 45px;color: white;font-size: 12px;font-weight:
+                    700;cursor: pointer;width: auto;border-radius: 100px">Submit</a>
+
+                <!--<button type="button" class="btn btn-primary">Submit</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reviewSubmitModal" tabindex="-1" role="dialog" aria-labelledby="Review Submit Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-left: auto">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="submit-review-msg">Thank You For Your Review.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+
+    <div class="row no-gutters align-content-center header-bar" id="header-bar">
+        <div class="col-sm-2 col-12">
+            <img src="/images/logo.png" class="header-logo">
+        </div>
+        <div class="col-sm-3 offset-2 col-12">
+            <!--empty for search text box later-->
+        </div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="header-links align-middle" href="/library">Library</a></div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="align-middle header-links" href="#">Events</a></div>
+        <div class=" col-sm-1 col-12 align-middle header-links-div"><a
+                class="align-middle header-links" href="#">Teachers</a></div>
+
+
+        <div id="userDetails" class="dropdown col-sm-2 col-12 align-middle header-dropdown">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- <a href="#"><i class="fa fa-bell"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+            &nbsp;&nbsp;&nbsp;<a style="color: #222;" href="#" class="dropdown-toggle header-links"
+                                 data-toggle="dropdown"
+                                 role="button" aria-haspopup="true" aria-expanded="false">
+            <img src="/images/boy.png" class="img-circle header-profile-img">
+            <span id="name"></span> <span class="caret"></span></a>
+            <ul class="dropdown-menu header-dropdown-menu">
+                <li class="header-dropdown-menu-li"><a href="/student/mycourses"
+                                                       class="header-links">My Courses</a></li>
+                <li class="header-dropdown-menu-li"><a href="/student/mybookmarks"
+                                                       class="header-links">My Bookmarks</a></li>
+                <li class="header-dropdown-menu-li"><a onclick="logoutfn()" class="header-links" style="color: #999;">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <!--<div class="col-sm-6 text-right">-->
+
+        <!--<span id="userName" class="align-middle text-uppercase"></span>-->
+        <!--<a id="logout" onclick="logoutfn()"><i data-toggle="tooltip" title="Logout" data-placement="bottom"-->
+        <!--style="color: #555"-->
+        <!--class="fa fa-sign-out fa-2x align-middle"></i></a>-->
+        <!--</div>-->
+
+    </div>
+
+    <header class="jumbotron" style=" margin-bottom: 0; background-image: url(/images/header-pattern.png)">
+
+        <!-- Main component for a primary marketing message or call to action -->
+
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-xs-12 col-sm-8 offset-2 text-center">
+                    <h2 style="color: floralwhite;font-size: 28px" id="miniCourseName"></h2>
+                    <br>
+                    <p id="miniCourseDescription" style="color: floralwhite; font-size: 16px"></p>
+                    <div class="text-center" style="padding-top: 13px;margin: 0 auto">
+                    <a id="enroll" class="btn text-uppercase"
+                    style="padding: 10px 45px;font-size: 12px;font-weight: 700;cursor: pointer;width: auto;border-radius: 100px;border: 1px solid white">Enroll</a>
+                    <p id="msg" style="color: white;padding-top: 10px;margin-bottom: 6px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+</div>
+
+<div class="container" style="margin-top: 30px">
+
+    <div class="row" style="margin-bottom: 0px;">
+        <div class="col-sm-12">
+            <div class="row no-gutters"
+                 style="padding: 20px; background-color: white; height:auto; box-shadow: #DDD 0 0 8px 1px ; border-radius: .125rem">
+                <div class="col-sm-2 text-center">
+                    <p><b>TEACHER</b></p>
+                    <img id="teacher-img" src="/images/user-image.jpg" style="border-radius: 50%; height: 30px">
+                    <span id="teacherName"></span>
+                </div>
+                <div class="col text-center">
+                    <p><b>RATINGS</b></p>
+                    <div id="upper-rating"></div>
+                </div>
+                <div class="col text-center">
+                    <p><b>REVIEWS</b></p>
+                    <span id="noOfReviews"></span>
+                </div>
+                <div class="col text-center">
+                    <p><b>SUBJECT</b></p>
+                    <span id="subject"></span>
+                </div>
+                <div class="col text-center">
+                    <p><b>CLASS</b></p>
+                    <span id="className"></span>
+                </div>
+                <div class="col text-center">
+                    <p><b>DURATION</b></p>
+                    <span id="miniCourseDuration"></span>
+                </div>
+                <div class="col text-center">
+                    <p><b>DIFFICULTY</b></p>
+                    <span id="difficulty"></span>
+                </div>
+                <div class="col text-center">
+                    <p><b>MEDIUM</b></p>
+                    <span id="medium"></span>
+                </div>
+                <div class="col text-center">
+                    <p><b>RELEVANCE</b></p>
+                    <span id="relevance"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="col-sm-2 text-center" style="padding-top: 13px">-->
+    <!--<a id="enroll" class="btn btn-success text-uppercase"-->
+    <!--style="background-color:#4bca81;padding: 10px 45px;color: white;font-size: 12px;font-weight: 700;cursor: pointer;width: auto;border-radius: 100px">Enroll</a>-->
+    <!--<p id="msg" style="padding-top: 10px;margin-bottom: 6px;"></p>-->
+    <!--</div>-->
+
+    <div class="row" style="margin-top: 35px;">
+        <div class="col-sm-8">
+
+            <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 2px">
+                <li class="nav-item">
+                    <a class="nav-link active nav-style a-style" data-toggle="tab"
+                       href="#lecturesTab"><p><b>Lectures&nbsp;&nbsp;&nbsp;&nbsp;</b></p></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-style a-style" data-toggle="tab" href="#materialsTab"><p><b>Materials&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                    </p></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-style a-style" data-toggle="tab" href="#reviewsTab"><p><b>Reviews</b></p></a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="lecturesTab" role="tabpanel">
+                    <div id="lectures" class="row"
+                         style="background-color: white; box-shadow: #DDD 0 0px 8px 1px ; border-radius: .125rem; margin-bottom: 30px">
+                    </div>
+                </div>
+                <div class="tab-pane fade show" id="materialsTab" role="tabpanel">
+                    <div id="materials" class="row"
+                         style="background-color: white; box-shadow: #DDD 0 0px 8px 1px ; border-radius: .125rem; margin-bottom: 30px">
+                    </div>
+                </div>
+                <div class="tab-pane fade show" id="reviewsTab" role="tabpanel">
+                    <div id="reviews" class="row"
+                         style="background-color: white; box-shadow: #DDD 0 0px 8px 1px ; border-radius: .125rem; margin-bottom: 30px">
+                    </div>
+                </div>
+            </div>
+
+
+            <!--<p><b>Materials</b></p>-->
+            <!--<div class="row"-->
+            <!--style="height: auto;background-color: white;box-shadow: #DDD 0 0px 8px 1px ; border-radius: .125rem;margin-bottom: 30px; padding: 15px">-->
+
+            <!--</div>-->
+        </div>
+        <div class="col-sm-4">
+            <p><b>Teacher</b></p>
+            <div class="row"
+                 style="padding: 15px; background-color: white; height:auto; box-shadow: #DDD 0 0 8px 1px ; border-radius: .125rem;margin-bottom: 35px">
+                <div class="col-sm-12 text-center">
+                    <img id="teacherImage" alt="Tutor Image" style="border-radius: 50%" src="/images/user-image.jpg">
+                    <br><br>
+                    <p style="color: #848589" id="nameOfTheTeacher"></p>
+                    <p style="color: #848589;" id="teacherDescription"></p>
+                </div>
+            </div>
+
+            <p><b>Ratings</b></p>
+            <div class="row text-center"
+                 style="padding: 15px; background-color: white; height:auto; box-shadow: #DDD 0 0 8px 1px ; border-radius: .125rem;margin-bottom: 35px">
+                <div class="col-sm-12 p-0" id="lower-rating"></div>
+            </div>
+
+            <!--<p><b>Doubts</b></p>-->
+            <!--<div class="row"-->
+            <!--style="padding: 15px; background-color: white; height:auto; box-shadow: #DDD 0 0 8px 1px ; border-radius: .125rem">-->
+            <!--</div>-->
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

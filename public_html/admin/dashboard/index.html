@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page - MathonGo</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script src="./index2.js"></script>
+    <link rel="stylesheet" href="./index.css">
+    <script>
+
+        let logoutfn = function () {
+            $.ajax({
+                url: '/logout',
+                headers: {"Authorization": "Bearer " + localStorage.token},
+                method: "GET"
+            }).done(function (user) {
+                localStorage.removeItem("token");
+                window.location.replace(user.url);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        }
+    </script>
+</head>
+<body>
+<br>
+<h1 class="text-center">ADMIN PAGE
+<a onclick="logoutfn()" class="btn buttons">Logout</a></h1>
+<br>
+<button class="btn buttons" id="tutorButton">Add a Tutor</button>
+<button class="btn buttons" id="viewTutorsButton">View Tutors</button>
+<button class="btn buttons" id="classButton">Add a Class</button>
+<button class="btn buttons" id="subjectButton">Add a Subject</button>
+<button class="btn buttons" id="chapterButton">Add a Chapter</button>
+<button class="btn buttons" id="categoryButton">Add a Category</button>
+<button class="btn buttons" id="courseButton">Add Course</button>
+<button class="btn buttons" id="viewCoursesButton">View Courses</button>
+
+<div id="container">
+    <br>
+    <form id="dataForm">
+
+    </form>
+    <p id="msg"></p>
+</div>
+</body>
+</html>
