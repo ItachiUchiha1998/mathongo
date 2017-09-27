@@ -1,4 +1,13 @@
 $(document).ready(function () {
+
+  function addScript(src) {
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.src = src;
+          document.getElementsByTagName('head')[0].appendChild(s);
+          console.log("FN called");
+      }
+
   $('#name').text(localStorage.getItem('name'));
 
   const lessonId = window.location.pathname.split('/lessons/')[1].split('/')[0];
@@ -126,13 +135,9 @@ $(document).ready(function () {
 
         }).then( function(obj) {
           console.log("DONE");
-          var script = document.createElement('script');
-          script.onload = function () {
-              console.log("Cool");
-          };
-          script.src = "index2.js";
-          }
-        ).fail(function (object) {
+          var ss = "index2.js";
+          addScript(ss);          
+    }).fail(function (object) {
           const bookmark = $('#bookmark');
           bookmark.click(function () {
             window.alert("Please Login First");
