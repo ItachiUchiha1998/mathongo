@@ -727,14 +727,21 @@ $(document).ready(function () {
                         return;
                       }
 
-                      $.ajax({
-                          url: '/api/Upload' ,
-                          method : 'POST',
-                          error : function(XMLHttpRequest, textStatus, errorThrown) {
-                                  alert('error'); },
-                          success : function(data) {
-                              console.log("Successfuly uploaded");
+                      $("#btnSubmit").click(function(e) {
+                        e.preventDefault();
+                        $.ajax({
+                          type: "POST",
+                          url: "/api/Upload",
+                          data: {
+                            id: $("#btnSubmit").val(),
+                          },
+                          success: function(result) {
+                            console.log('ok');
+                          },
+                          error: function(result) {
+                            console.log('error');
                           }
+                        });
                       });
 
                       $.ajax({
