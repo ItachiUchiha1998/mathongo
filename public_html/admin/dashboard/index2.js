@@ -728,6 +728,16 @@ $(document).ready(function () {
                       }
 
                       $.ajax({
+                          url: '/api/Upload' ,
+                          method : 'POST',
+                          error : function(XMLHttpRequest, textStatus, errorThrown) {
+                                  alert('error'); },
+                          success : function(data) {
+                              console.log("Successfuly uploaded");
+                          }
+                      });
+
+                      $.ajax({
                         url: "/api/tutors/" + tutorId + "/addMiniCourse",
                         data: miniCourseData,
                         method: 'POST',
