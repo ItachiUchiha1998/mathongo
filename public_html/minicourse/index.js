@@ -281,6 +281,30 @@ $(document).ready(function () {
                     </div>         
             `)
     }
+    /*
+      for (let i = miniCourse.materials.length - 1; i >= 0; i--) {
+      if (!miniCourse.materials[i].description) {
+        continue;
+      }
+      reviews.append(`<div class="col-sm-12" style="height: auto;padding: 20px;border-bottom: solid 2px #EEEEEE;">
+                        <div class="row" style="margin-bottom: 0px">
+                            <div class="col-sm-1" style="padding-left: 0px">
+                                <img src="/images/user-image.jpg" style="border-radius: 50%; height: 50px">
+                            </div>
+                            <div class="col-sm-11">
+                                <div id="jRate-${miniCourse.reviews[i].id}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12" style="margin-top: 15px">
+                                <p style="font-size: 14px;font-weight: 400;margin-bottom: 0px;color: #A4A5A9">
+                                    ${miniCourse.materials[i].description}
+                                </p>
+                            </div>
+                        </div>
+                    </div>         
+            `);
+    }
+    */
     let defaultName = 'Anonymous User'
     for (let i = miniCourse.reviews.length - 1; i >= 0; i--) {
       if (!miniCourse.reviews[i].description) {

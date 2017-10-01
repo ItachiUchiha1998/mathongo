@@ -589,10 +589,8 @@ $(document).ready(function () {
 
                     categoryString += `</label><br><br>`;
 
-                    let material = '<label> Upload Materials <input type="file" name="material" >';
-
                     $form.append(tutorString + classString + subjectString + courseString + 
-                                  categoryString + material);
+                                  categoryString);
                     $form.append(`<ol id="lessons-list"></ol>
                             <button class="btn buttons" id="add-lesson">Add Lesson</button>
                             `);
@@ -625,6 +623,12 @@ $(document).ready(function () {
         <label><input type="radio" name="lessonlevel` + counter + `" value="Intermediate"> Intermediate</label>
         <label><input type="radio" name="lessonlevel` + counter + `" value="Advance"> Advance</label>
     </label>
+      <br><br>
+
+        <input type="file" name="material" id="frmUploader" multiple />
+        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
+
+
     <br><br>
     
         </li>`);
@@ -637,6 +641,22 @@ $(document).ready(function () {
                     $submit = $('#submit');
                     $submit.unbind('click');
                     $submit.click(function () {
+
+                      var options = {
+                          beforeSubmit: showRequest,  // pre-submit callback
+                          success: showResponse  // post-submit callback
+                      };
+                      $('#frmUploader').submit(function () {
+                          $(this).ajaxSubmit(options);
+                          return false;
+                      });
+                          function showRequest(formData, jqForm, options) {
+                          alert('Uploading is starting.');
+                          return true;
+                      }
+                      function showResponse(responseText, statusText, xhr, $form) {
+                          alert('status: ' + statusText + '\n\nresponseText: \n' + responseText );
+                      }
 
                       categoryIds = [];
                       $('input[name=category]:checked').each(function () {
@@ -654,8 +674,7 @@ $(document).ready(function () {
                         classId: $('input[name="class"]:checked').val(),
                         subjectId: $('input[name="subject"]:checked').val(),
                         courseId: $('input[name="course"]:checked').val(),
-                        categoryIds: categoryIds
-                        
+                        categoryIds: categoryIds 
                       };
 
                       if (miniCourseData.name === '') {
