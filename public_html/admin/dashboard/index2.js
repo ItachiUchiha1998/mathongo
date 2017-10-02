@@ -589,8 +589,11 @@ $(document).ready(function () {
 
                     categoryString += `</label><br><br>`;
 
+                    let materials = `<input type="file" name="material" id="material" multiple />
+                                      <input type="button" name="submit" id="btnSubmit" value="Upload" />`; 
+
                     $form.append(tutorString + classString + subjectString + courseString + 
-                                  categoryString);
+                                  categoryString+materials);
                     $form.append(`<ol id="lessons-list"></ol>
                             <button class="btn buttons" id="add-lesson">Add Lesson</button>
                             `);
@@ -625,14 +628,10 @@ $(document).ready(function () {
     </label>
       <br><br>
 
-        <input type="file" name="material" id="frmUploader" multiple />
-        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
-
-
     <br><br>
     
         </li>`);
-
+  
 
                       counter++;
                     });
@@ -640,23 +639,28 @@ $(document).ready(function () {
                     console.log(1);
                     $submit = $('#submit');
                     $submit.unbind('click');
-                    $submit.click(function () {
 
-                      var options = {
-                          beforeSubmit: showRequest,  // pre-submit callback
-                          success: showResponse  // post-submit callback
-                      };
-                      $('#frmUploader').submit(function () {
-                          $(this).ajaxSubmit(options);
-                          return false;
+                    $(document).ready(function() {
+                        $("#btnSubmit").click(function(e) {
+                        e.preventDefault();
+                        console.log("pressed");
+                        $.ajax({
+                          type: "post",
+                          url: "/api/tutors/api/Upload/",
+                          data: {
+                            id: $("#material").val(),
+                          },
+                          success: function(result) {
+                            console.log('ok');
+                          },
+                          error: function(result) {
+                            console.log('error');
+                          }
+                        })
                       });
-                          function showRequest(formData, jqForm, options) {
-                          alert('Uploading is starting.');
-                          return true;
-                      }
-                      function showResponse(responseText, statusText, xhr, $form) {
-                          alert('status: ' + statusText + '\n\nresponseText: \n' + responseText );
-                      }
+                      })
+
+                    $submit.click(function () {
 
                       categoryIds = [];
                       $('input[name=category]:checked').each(function () {
@@ -664,6 +668,7 @@ $(document).ready(function () {
                       });
                       console.log(2);
                       tutorId = $('input[name="tutor"]:checked').val();
+
                       miniCourseData = {
                         name: $('#minicourse-name').val(),
                         noOfLessons: $('#minicourse-no-of-lessons').val(),
@@ -674,7 +679,8 @@ $(document).ready(function () {
                         classId: $('input[name="class"]:checked').val(),
                         subjectId: $('input[name="subject"]:checked').val(),
                         courseId: $('input[name="course"]:checked').val(),
-                        categoryIds: categoryIds 
+                        categoryIds: categoryIds,
+                        material : $('#material').val()
                       };
 
                       if (miniCourseData.name === '') {
@@ -721,38 +727,20 @@ $(document).ready(function () {
                         return;
                       }
 
-
                       if (miniCourseData.categoryIds.length === 0) {
                         $msg.attr('class', 'text-danger').text("Please select the categories");
                         return;
                       }
 
-                      $("#btnSubmit").click(function(e) {
-                        e.preventDefault();
-                        $.ajax({
-                          type: "POST",
-                          url: "/api/Upload",
-                          data: {
-                            id: $("#btnSubmit").val(),
-                          },
-                          success: function(result) {
-                            console.log('ok');
-                          },
-                          error: function(result) {
-                            console.log('error');
-                          }
-                        });
-                      });
-
                       $.ajax({
                         url: "/api/tutors/" + tutorId + "/addMiniCourse",
                         data: miniCourseData,
                         method: 'POST',
+                        contentType: "application/pdf",
                         headers: {
                           "Authorization": "Bearer " + localStorage.getItem("token")
                         }
                       }).done(function (miniCourseFinal) {
-
                         let lessonData = [];
                         console.log(miniCourseFinal);
                         if (miniCourseFinal.success === 'false' && miniCourseFinal.message === 'Admin Only') {

@@ -10,17 +10,6 @@ var checked = false;
 
 router.use(bodyParser.json());
 
-var Storage = multer.diskStorage({
-  destination : function(req,res,callback) {
-    callback(null,"./uploads");
-  },
-  filename: function (req, file, callback) {
-        callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);  
-    }
-});
-
-var upload = multer({ storage: Storage }).array("material", 3);
-
 router.get('/', function (req, res) {
 
   models.MiniCourse.findAll({
@@ -350,15 +339,5 @@ router.delete('/:id', passport.authenticate('bearer'), ensure.ensureAdmin(), fun
     res.send("Could not delete the minicourse");
   })
 });
-
-router.post("/api/Upload", function (req, res) {
-    upload(req, res, function (err) {
-        if (err) {
-            return res.end("Something went wrong!");
-        }
-        return res.end("File uploaded sucessfully!.");
-    });
-});
-
 
 module.exports = router;

@@ -2,7 +2,11 @@ const router = require('express').Router();
 const models = require('./../../db/models').models;
 const password = require('./../../utils/password');
 const ensure = require('./../../passport/passportutils');
+var multer = require('multer');
+var bodyParser = require('body-parser');
 const passport = require('./../../passport/passporthandler');
+
+router.use(bodyParser.json());
 
 router.get('/', function (req, res) {
   models.Tutor.findAll().then(function (tutors) {
@@ -149,6 +153,7 @@ router.get('/:id/:minicourse/:lesson', function (req, res) {
 
 
 router.post('/:id/addMiniCourse', passport.authenticate('bearer'), ensure.ensureAdmin(), function (req, res) {
+  console.log("MiniCourse called");
   const tutorId = parseInt(req.params.id);
   models.MiniCourse.create({
     name: req.body.name,
@@ -157,7 +162,8 @@ router.post('/:id/addMiniCourse', passport.authenticate('bearer'), ensure.ensure
     level: req.body.level,
     duration: req.body.duration,
     medium: req.body.medium,
-    tutorId: tutorId
+    tutorId: tutorId,
+    material : req.body.material
   }).then(function (miniCourse) {
     models.Class.findOne({
       where: {
@@ -420,5 +426,28 @@ router.get('/:id/isFollowed', passport.authenticate('bearer'), ensure.ensureStud
     })
 });
 
+var storage = multer.diskStorage({
+      destination : function(req,res,callback) {
+      callback(null,"./uploads");
+     },
+      filename: function (req, file, callback) {
+          callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);  
+        }
+  });
+
+
+var upload = multer({ storage: storage }).array("material", 10);
+
+router.post("/api/Upload", function (req, res) {
+
+    upload(req, res, function (err) {
+        if (err) {
+            console.log("Something went wrong!");
+        }
+        res.send("File uploaded sucessfully!");
+        console.log('File uploaded sucessfully!');
+    });
+    
+});
 
 module.exports = router;

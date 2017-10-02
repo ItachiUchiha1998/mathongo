@@ -80,7 +80,7 @@ const Lesson = db.define('lesson', {
   videoUrl: Sequelize.STRING(1234),
   level: Sequelize.STRING,
   duration: Sequelize.STRING,
-  description: Sequelize.STRING,
+  description: Sequelize.STRING
 });
 
 const Bookmark = db.define('bookmark', {
@@ -110,13 +110,11 @@ const Review = db.define('review', {
   description: Sequelize.STRING(5000)
 });
 
-//
-  const Materials = db.define('materials', {
+/*const Materials = db.define('materials', {
   id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
   description: Sequelize.STRING(5000),
   destination: Sequelize.STRING(1234) 
-});
-//
+});*/
 
 const Class = db.define('class', {
   id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
@@ -182,13 +180,11 @@ Review.belongsTo(MiniCourse);
 Student.hasMany(Review);
 MiniCourse.hasMany(Review);
 
-//
-Materials.belongsTo(Student);
+/*Materials.belongsTo(Student);
 Materials.belongsTo(MiniCourse);
 Student.hasMany(Materials);
 MiniCourse.hasMany(Materials);
-//
-
+*/
 Tag.belongsTo(Class);
 Tag.belongsTo(Subject);
 Tag.belongsTo(Course);
@@ -223,7 +219,7 @@ module.exports = {
     Follow,
     Upvote,
     Review,
-    Materials,
+    //Materials,
     Class,
     Subject,
     Course,
