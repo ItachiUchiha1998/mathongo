@@ -202,6 +202,7 @@ function addMiniCourses(minicourses) {
     const ul = $('#minicourses-list');
     ul.empty();
     for (let i = 0; i < minicourses.length; i++) {
+        if(minicourses[i].name == null) continue;
         let name = minicourses[i].name.split(" ").join("-");
         let category = (minicourses[i].minicoursecategories[0].category.categoryName);
         let categories = minicourses[i].minicoursecategories.map((i) => i.category.categoryName).join(', ');
