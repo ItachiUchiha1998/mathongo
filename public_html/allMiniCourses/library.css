@@ -280,6 +280,9 @@ html, body {
     text-decoration: none;
     color: white;
     cursor: pointer;
+      height: 39px;
+  border-radius: 19.5px;
+  background-color: #43b574;
 }
 
 .enrol-style:focus {
@@ -342,6 +345,40 @@ html, body {
 
 .checkbox-style{
     margin-right:15px;!important;
+    width: 18px;
+  height: 18px;
+  background-color: #d8dde6;
+}
+
+.footer-base {
+  width: 1440px;
+  height: 131px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px 0 rgba(6, 28, 63, 0.1);
+}
+
+.details {
+  width: 59px;
+  height: 12px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  color: #8897a7;
+}
+
+
+.details:hover {
+    width: 59px;
+  height: 12px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  color: #768391;
+  cursor: pointer;
 }
 
 /*.regular-checkbox {*/

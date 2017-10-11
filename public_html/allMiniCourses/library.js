@@ -215,14 +215,14 @@ function addMiniCourses(minicourses) {
             '</div> </div> <div class="row minicourse-tags"> <div class="minicourse-tag">' +
             '<div class="row tag-title">TEACHER </div> <div class="row tag-content">' +
             '<img src="../images/'+minicourses[i].tutor.img+'.jpg" style="border-radius: 50%; height: 30px">&nbsp;&nbsp;' +
-            '<span class="align-middle" style="margin-top: 5px"> ' + minicourses[i].tutor.name + '</span></div> </div>' +
+            '<span class="align-middle details" style="margin-top: 5px"> ' + minicourses[i].tutor.name + '</span></div> </div>' +
             '<div class="minicourse-tag"> <div class="row tag-title">DURATION</div>' +
-            '<div class="row tag-content"><span>' + minicourses[i].duration + '</span></div> </div> <div class="minicourse-tag">' +
-            '<div class="row tag-title">DIFFICULTY</div> <div class="row tag-content"><span>' + minicourses[i].level + '</span></div>' +
-            '</div> <div class="minicourse-tag"> <div class="row tag-title">RELEVANCE</div>' +
-            '<div class="row tag-content"><span>' + categories + '</span></div> </div> <div class="minicourse-tag">' +
+            '<div class="row tag-content details"><span>' + minicourses[i].duration + '</span></div> </div> <div class="minicourse-tag">' +
+            '<div class="row tag-title ">DIFFICULTY</div> <div class="row tag-content details"><span>' + minicourses[i].level + '</span></div>' +
+            '</div> <div class="minicourse-tag details"> <div class="row tag-title ">RELEVANCE</div>' +
+            '<div class="row tag-content details"><span>' + categories + '</span></div> </div> <div class="minicourse-tag">' +
             '<div class="row tag-title">MEDIUM</div>' +
-            '<div class="row tag-content"><span>' + minicourses[i].medium + '</span></div> </div> </div> </div> </li>'
+            '<div class="row tag-content details"><span>' + minicourses[i].medium + '</span></div> </div> </div> </div> </li>'
         )
     }
 }
