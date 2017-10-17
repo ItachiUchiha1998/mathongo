@@ -9,5 +9,7 @@ router.use('/students', passport.authenticate('bearer'), require('./students'));
 router.use('/tutors', require('./tutors'));
 router.use('/extra', require('./extra'));
 router.use('/reviews', require('./reviews'));
+router.use('/comments', require('./comments'));
+
 
 module.exports = router;

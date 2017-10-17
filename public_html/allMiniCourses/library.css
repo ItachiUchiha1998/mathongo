@@ -350,6 +350,13 @@ html, body {
   background-color: #d8dde6;
 }
 
+.checkbox-style: checked{
+    margin-right:15px;!important;
+    width: 18px;
+  height: 18px;
+  background-color: #fff;
+}
+
 .footer-base {
   width: 1440px;
   height: 131px;

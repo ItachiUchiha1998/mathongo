@@ -5,7 +5,6 @@ const db = new Sequelize('mathongo', 'muser', 'mathongopass', {
   port: 5432,
   dialect: 'postgres'
 });
-
 // const db = new Sequelize('mathongo', 'muser', 'mpass', {
 //   host: 'localhost',
 //   dialect: 'postgres'
@@ -110,6 +109,13 @@ const Review = db.define('review', {
   description: Sequelize.STRING(5000)
 });
 
+const Comment = db.define('comment', {
+  id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
+  rating: Sequelize.DataTypes.REAL,      //discuss
+  description: Sequelize.STRING(5000)
+});
+
+
 /*const Materials = db.define('materials', {
   id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
   description: Sequelize.STRING(5000),
@@ -180,6 +186,11 @@ Review.belongsTo(MiniCourse);
 Student.hasMany(Review);
 MiniCourse.hasMany(Review);
 
+Comment.belongsTo(Student);
+Comment.belongsTo(MiniCourse);
+Student.hasMany(Comment);
+MiniCourse.hasMany(Comment);
+
 /*Materials.belongsTo(Student);
 Materials.belongsTo(MiniCourse);
 Student.hasMany(Materials);
@@ -219,6 +230,7 @@ module.exports = {
     Follow,
     Upvote,
     Review,
+    Comment,
     //Materials,
     Class,
     Subject,
