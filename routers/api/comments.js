@@ -23,7 +23,6 @@ router.get('/:miniCourseId', function (req, res) {
 router.post('/:miniCourseId', passport.authenticate('bearer'), ensure.ensureStudent(), function (req, res) {
   let miniCourseId = req.params.miniCourseId;
   models.Comment.create({
-    rating: (parseInt(req.body.rating)),
     description: req.body.description,
     minicourseId: miniCourseId,
     studentId: req.user.user.id

@@ -111,7 +111,6 @@ const Review = db.define('review', {
 
 const Comment = db.define('comment', {
   id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
-  rating: Sequelize.DataTypes.REAL,      //discuss
   description: Sequelize.STRING(5000)
 });
 
