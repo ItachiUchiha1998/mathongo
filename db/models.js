@@ -79,7 +79,8 @@ const Lesson = db.define('lesson', {
   videoUrl: Sequelize.STRING(1234),
   level: Sequelize.STRING,
   duration: Sequelize.STRING,
-  description: Sequelize.STRING
+  description: Sequelize.STRING,
+  noOfComments : {type: Sequelize.INTEGER, defaultValue: 0}
 });
 
 const Bookmark = db.define('bookmark', {
@@ -186,9 +187,9 @@ Student.hasMany(Review);
 MiniCourse.hasMany(Review);
 
 Comment.belongsTo(Student);
-Comment.belongsTo(MiniCourse);
+Comment.belongsTo(Lesson);
 Student.hasMany(Comment);
-MiniCourse.hasMany(Comment);
+Lesson.hasMany(Comment);
 
 /*Materials.belongsTo(Student);
 Materials.belongsTo(MiniCourse);
