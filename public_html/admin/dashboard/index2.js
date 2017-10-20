@@ -589,11 +589,7 @@ $(document).ready(function () {
 
                     categoryString += `</label><br><br>`;
 
-                    let materials = `<input type="file" name="material" id="material" multiple />
-                                      <input type="button" name="submit" id="btnSubmit" value="Upload" />`; 
-
-                    $form.append(tutorString + classString + subjectString + courseString + 
-                                  categoryString+materials);
+                    $form.append(tutorString + classString + subjectString + courseString + categoryString);
                     $form.append(`<ol id="lessons-list"></ol>
                             <button class="btn buttons" id="add-lesson">Add Lesson</button>
                             `);
@@ -626,12 +622,10 @@ $(document).ready(function () {
         <label><input type="radio" name="lessonlevel` + counter + `" value="Intermediate"> Intermediate</label>
         <label><input type="radio" name="lessonlevel` + counter + `" value="Advance"> Advance</label>
     </label>
-      <br><br>
-
     <br><br>
     
         </li>`);
-  
+
 
                       counter++;
                     });
@@ -639,27 +633,6 @@ $(document).ready(function () {
                     console.log(1);
                     $submit = $('#submit');
                     $submit.unbind('click');
-
-                    $(document).ready(function() {
-                        $("#btnSubmit").click(function(e) {
-                        e.preventDefault();
-                        console.log("pressed");
-                        $.ajax({
-                          type: "post",
-                          url: "/api/tutors/api/Upload/",
-                          data: {
-                            id: $("#material").val(),
-                          },
-                          success: function(result) {
-                            console.log('ok');
-                          },
-                          error: function(result) {
-                            console.log('error');
-                          }
-                        })
-                      });
-                      })
-
                     $submit.click(function () {
 
                       categoryIds = [];
@@ -668,7 +641,6 @@ $(document).ready(function () {
                       });
                       console.log(2);
                       tutorId = $('input[name="tutor"]:checked').val();
-
                       miniCourseData = {
                         name: $('#minicourse-name').val(),
                         noOfLessons: $('#minicourse-no-of-lessons').val(),
@@ -679,8 +651,8 @@ $(document).ready(function () {
                         classId: $('input[name="class"]:checked').val(),
                         subjectId: $('input[name="subject"]:checked').val(),
                         courseId: $('input[name="course"]:checked').val(),
-                        categoryIds: categoryIds,
-                        material : $('#material').val()
+                        categoryIds: categoryIds
+
                       };
 
                       if (miniCourseData.name === '') {
@@ -727,6 +699,7 @@ $(document).ready(function () {
                         return;
                       }
 
+
                       if (miniCourseData.categoryIds.length === 0) {
                         $msg.attr('class', 'text-danger').text("Please select the categories");
                         return;
@@ -736,11 +709,11 @@ $(document).ready(function () {
                         url: "/api/tutors/" + tutorId + "/addMiniCourse",
                         data: miniCourseData,
                         method: 'POST',
-                        contentType: "application/pdf",
                         headers: {
                           "Authorization": "Bearer " + localStorage.getItem("token")
                         }
                       }).done(function (miniCourseFinal) {
+
                         let lessonData = [];
                         console.log(miniCourseFinal);
                         if (miniCourseFinal.success === 'false' && miniCourseFinal.message === 'Admin Only') {
@@ -833,19 +806,16 @@ $(document).ready(function () {
               $form.append(`<ul id="minicourses-list" class="list-group" ></ul>`);
               const $minicourses_list = $('#minicourses-list');
               minicourses.forEach(function (minicourse) {
-                if(minicourse.name == null) console.log("null");
-                else {
-                                let name = minicourse.name.split(" ").join("-");
-                                $minicourses_list.append(`
-                                          <li class="list-group-item"  miniCourseId="` + minicourse.id + `">
-                                          <span>` + minicourse.name + `</span>
-                                          <a class="btn btn-outline-success view" style="margin-left: 50px" target = "_blank" href="/courses/` + minicourse.id + `/` + name + `">View</a>
-                                          <button class="btn btn-outline-info edit" style="margin-left: 20px">Edit</button>
-                                          <button class="btn btn-outline-danger delete" style="margin-left: 20px">Delete</button>
-                                          <button class="btn btn-outline-info add-lesson" style="margin-left: 20px">Add Lesson</button>
-                                          </li>
-                                        `)
-                    }
+                let name = minicourse.name.split(" ").join("-");
+                $minicourses_list.append(`
+                          <li class="list-group-item"  miniCourseId="` + minicourse.id + `">
+                          <span>` + minicourse.name + `</span>
+                          <a class="btn btn-outline-success view" style="margin-left: 50px" target = "_blank" href="/courses/` + minicourse.id + `/` + name + `">View</a>
+                          <button class="btn btn-outline-info edit" style="margin-left: 20px">Edit</button>
+                          <button class="btn btn-outline-danger delete" style="margin-left: 20px">Delete</button>
+                          <button class="btn btn-outline-info add-lesson" style="margin-left: 20px">Add Lesson</button>
+                          </li>
+                        `)
               });
               $('.edit').click(function (e) {
                 let miniCourseId = e.target.parentElement.getAttribute('miniCourseId');
