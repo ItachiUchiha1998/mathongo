@@ -803,9 +803,12 @@ $(document).ready(function () {
             $form.text("");
             $msg.text("");
             $.get("/api/minicourses", function (minicourses) {
+
               $form.append(`<ul id="minicourses-list" class="list-group" ></ul>`);
               const $minicourses_list = $('#minicourses-list');
               minicourses.forEach(function (minicourse) {
+                if(minicourse.name == null) console.log("null");
+                else {
                 let name = minicourse.name.split(" ").join("-");
                 $minicourses_list.append(`
                           <li class="list-group-item"  miniCourseId="` + minicourse.id + `">
@@ -816,6 +819,7 @@ $(document).ready(function () {
                           <button class="btn btn-outline-info add-lesson" style="margin-left: 20px">Add Lesson</button>
                           </li>
                         `)
+              }
               });
               $('.edit').click(function (e) {
                 let miniCourseId = e.target.parentElement.getAttribute('miniCourseId');
