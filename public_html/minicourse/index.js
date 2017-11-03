@@ -62,70 +62,6 @@ $(document).ready(function () {
       noOfEachRating[(+miniCourse.reviews[i].rating)]++;
     }
 
-    $lowerRating.append(
-      `
-            <h4 style=";margin-bottom: 7px; color: #444; font-weight: 500;padding-top: 5px"><b>${miniCourse.rating.toFixed(1)}</b><br></h4>
-            <div id="jRate-rating"></div>   
-            <p style="color: #999;font-weight: 500;border: none !important;padding: 5px;font-size: 12px">${(miniCourse.noOfRatings !== null ? miniCourse.noOfRatings : 0)} Ratings</p>
-            <div class="row">
-                <div class="col-sm-1" id="jRate-rating-vertical" style="float: left;"></div>
-                <div class="col-sm-10 p-0">
-                    <div class="row" style="height: 30px">
-                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">5</p>
-                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
-                            <div class="progress-bar" style="width: ${(noOfEachRating[5] * 100) / miniCourse.noOfRatings}%;">
-                                
-                            </div>
-                        </div>
-                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[5]}</p>
-                    </div>
-                    <div class="row" style="height: 30px">
-                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">4</p>
-                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
-                            <div class="progress-bar" style="width: ${(noOfEachRating[4] * 100) / miniCourse.noOfRatings}%;">
-                                
-                            </div>
-                        </div>
-                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[4]}</p>
-                    </div>
-                    <div class="row" style="height: 30px">
-                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">3</p>
-                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
-                            <div class="progress-bar" style="width: ${(noOfEachRating[3] * 100) / miniCourse.noOfRatings}%;">
-                                
-                            </div>
-                        </div>
-                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[3]}</p>
-                    </div>
-                    <div class="row" style="height: 30px">
-                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">2</p>
-                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
-                            <div class="progress-bar" style="width: ${(noOfEachRating[2] * 100) / miniCourse.noOfRatings}%;">
-                                
-                            </div>
-                        </div>
-                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[2]}</p>
-                    </div>
-                    <div class="row" style="height: 30px">
-                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">1</p>
-                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
-                            <div class="progress-bar" style="width: ${(noOfEachRating[1] * 100) / miniCourse.noOfRatings}%;">
-                                
-                            </div>
-                        </div>
-                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[1]}</p>
-                    </div>
-                    
-                </div>
-                
-           </div>
-           <br>
-                <a id="rateAndReview" class="btn btn-success text-uppercase" data-toggle="modal" data-target="#reviewModal"
-                   style="background-color:#4bca81;padding: 10px 45px;color: white;font-size: 12px;font-weight: 700;cursor: pointer;width: auto;border-radius: 100px">Rate And Review</a>
-           
-`
-    );
-
     $('#jRate-add-review').jRate({
       rating: 5,
       startColor: '#FFD700',
@@ -208,10 +144,80 @@ $(document).ready(function () {
         console.log(1);
         enroll.text("Enrolled");
         isEnrolled = true;
+        const $lowerRating = $('#lower-rating');
+        $lowerRating.append(
+            `<h4 style=";margin-bottom: 7px; color: #444; font-weight: 500;padding-top: 5px"><b>${miniCourse.rating.toFixed(1)}</b><br></h4>
+            <div id="jRate-rating"></div>   
+            <p style="color: #999;font-weight: 500;border: none !important;padding: 5px;font-size: 12px">${(miniCourse.noOfRatings !== null ? miniCourse.noOfRatings : 0)} Ratings</p>
+            <div class="row">
+                <div class="col-sm-1" id="jRate-rating-vertical" style="float: left;"></div>
+                <div class="col-sm-10 p-0">
+                    <div class="row" style="height: 30px">
+                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">5</p>
+                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
+                            <div class="progress-bar" style="width: ${(noOfEachRating[5] * 100) / miniCourse.noOfRatings}%;">
+                                
+                            </div>
+                        </div>
+                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[5]}</p>
+                    </div>
+                    <div class="row" style="height: 30px">
+                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">4</p>
+                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
+                            <div class="progress-bar" style="width: ${(noOfEachRating[4] * 100) / miniCourse.noOfRatings}%;">
+                                
+                            </div>
+                        </div>
+                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[4]}</p>
+                    </div>
+                    <div class="row" style="height: 30px">
+                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">3</p>
+                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
+                            <div class="progress-bar" style="width: ${(noOfEachRating[3] * 100) / miniCourse.noOfRatings}%;">
+                                
+                            </div>
+                        </div>
+                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[3]}</p>
+                    </div>
+                    <div class="row" style="height: 30px">
+                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">2</p>
+                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
+                            <div class="progress-bar" style="width: ${(noOfEachRating[2] * 100) / miniCourse.noOfRatings}%;">
+                                
+                            </div>
+                        </div>
+                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[2]}</p>
+                    </div>
+                    <div class="row" style="height: 30px">
+                        <p class="col-sm-1 px-0" style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 4px;font-size: 12px">1</p>
+                        <div class="progress col-sm-9 p-0" style="margin-top: 6px;height: 10px">
+                            <div class="progress-bar" style="width: ${(noOfEachRating[1] * 100) / miniCourse.noOfRatings}%;">
+                                
+                            </div>
+                        </div>
+                        <p class="col-sm-1 px-0 " style="color: #999;font-weight: 500;border: none !important;padding-top:3px;margin-left: 10px;font-size: 12px">${noOfEachRating[1]}</p>
+                    </div>
+                    
+                </div>
+                
+           </div>
+           <br>
+                 <button id="rateAndReview" class="btn btn-success text-uppercase" data-toggle="modal" data-target="#reviewModal"
+                                style="background-color:#4bca81;padding: 10px 45px;color: white;font-size: 12px;font-weight: 700;cursor: pointer;width: auto;border-radius: 100px">Rate And Review</button>
+             
+      `
+
+
+
+          );
         enroll.click(function () {
           $('#msg').text("Already Enrolled");
         });
       } else if (enrollment.isEnrolled === 'false') {
+        const $lowerRating = $('#lower-rating');
+          $lowerRating.append(`
+          <p>You have to first enroll to give a review. </p>
+        `)
         enroll.click(function () {
           $.ajax({
             url: "/api/minicourses/" + miniCourseId + "/enroll",
@@ -227,7 +233,8 @@ $(document).ready(function () {
               $('#msg').text("");
               enroll.click(function () {
                 $('#msg').attr('class', 'text-success').text("Already Enrolled");
-                console.log(data.success); //
+                console.log(data.success);
+
               });
             } else {
 
