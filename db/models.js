@@ -107,7 +107,7 @@ const Upvote = db.define('upvote', {
 const Review = db.define('review', {
   id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
   rating: Sequelize.DataTypes.REAL,      //discuss
-  description: Sequelize.STRING(5000)
+  description: Sequelize.STRING(5000),
 });
 
 const Comment = db.define('comment', {

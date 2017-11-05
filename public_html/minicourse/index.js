@@ -1,4 +1,5 @@
 let isEnrolled = false;
+let reviewed = false;
 $(document).ready(function () {
 
   $.ajax({
@@ -24,6 +25,7 @@ $(document).ready(function () {
                 class="align-middle header-links" href="/">Register / Login</a></div>`)
     }
   });
+
 
 
   const miniCourseId = window.location.pathname.split('/courses/')[1].split('/')[0];
@@ -103,13 +105,14 @@ $(document).ready(function () {
         method: 'POST',
         data: {
           rating: rating,
-          description: $('#review-description').val()
+          description: $('#review-description').val(),
         },
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("token")
         }
       }).done(function (data) {
         if (data.success === true) {
+
           $('#reviewModal').modal('hide');
           $('#submit-review-msg').attr('class', 'text-success');
           $('#review-description').val('');
@@ -117,7 +120,6 @@ $(document).ready(function () {
           $('#reviewSubmitModal').on('hidden.bs.modal', function () {
             location.reload();
           });
-
 
         } else {
           window.alert('Please Try Again')
@@ -130,14 +132,14 @@ $(document).ready(function () {
         }
       });
 
-    });
-
+    }); 
 
     $.ajax({
       url: '/api/minicourses/' + miniCourseId + '/isEnrolled',
       method: 'GET',
       headers: {"Authorization": "Bearer " + localStorage.getItem("token")}
     }).done(function (enrollment) {
+
       console.log(enrollment);
       const enroll = $('#enroll');
       if (enrollment.isEnrolled === 'true') {
@@ -145,7 +147,18 @@ $(document).ready(function () {
         enroll.text("Enrolled");
         isEnrolled = true;
         const $lowerRating = $('#lower-rating');
-        $lowerRating.append(
+        
+        $.ajax({
+        url: '/api/reviews/isReviewed/' + miniCourseId,
+        method: 'GET',
+        headers: {"Authorization": "Bearer " + localStorage.getItem("token")}
+      }).done(function(reviewed) {
+        console.log(reviewed);
+        const $lowerRating = $('#lower-rating');
+        if(reviewed.isReviewed === "true") {
+          $lowerRating.append(`Course Rated`);
+        } else {
+          $lowerRating.append(
             `<h4 style=";margin-bottom: 7px; color: #444; font-weight: 500;padding-top: 5px"><b>${miniCourse.rating.toFixed(1)}</b><br></h4>
             <div id="jRate-rating"></div>   
             <p style="color: #999;font-weight: 500;border: none !important;padding: 5px;font-size: 12px">${(miniCourse.noOfRatings !== null ? miniCourse.noOfRatings : 0)} Ratings</p>
@@ -210,13 +223,25 @@ $(document).ready(function () {
 
 
           );
+        }
+      }).fail(function (object) {
+      if (object.responseText === 'Unauthorized') {
+        const enroll = $('#enroll');
+        enroll.click(function () {
+          window.alert('Please Login First');
+          window.location.replace('/');
+          });
+        }
+      });
+
+        
         enroll.click(function () {
           $('#msg').text("Already Enrolled");
         });
       } else if (enrollment.isEnrolled === 'false') {
         const $lowerRating = $('#lower-rating');
           $lowerRating.append(`
-          <p>You have to first enroll to give a review. </p>
+          <p> You have to first enroll to give a review. </p>
         `)
         enroll.click(function () {
           $.ajax({
@@ -352,8 +377,6 @@ $(document).ready(function () {
     }
 
   });
-
-
 });
 
 function goToLesson(lessonId, lessonName) {

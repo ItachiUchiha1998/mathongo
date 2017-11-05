@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const models = require('./../../db/models').models;
 const password = require('./../../utils/password');
 const passport = require('./../../passport/passporthandler');
@@ -10,7 +11,7 @@ router.get('/:miniCourseId', function (req, res) {
     where: {minicourseId: miniCourseId}
   }).then(function (reviews) {
     if (reviews) {
-      res.send({success: true, reviews: reviews.map((review => review.get()))})
+      res.send({success: true, reviews: reviews.map((review => review.get()))});
     } else {
       res.send({success: false})
     }
@@ -20,8 +21,26 @@ router.get('/:miniCourseId', function (req, res) {
   })
 });
 
+router.get('/isReviewed/:miniCourseId', passport.authenticate('bearer'), function (req, res) {
+  let miniCourseId = req.params.miniCourseId;
+  models.Review.findOne({
+    where: {minicourseId: miniCourseId , studentId: req.user.user.id}
+  }).then(function (reviewed) {
+    if (reviewed) {
+      res.send({isReviewed: 'true'});
+    } else {
+      res.send({isReviewed: 'false'});
+    }
+  }).catch(function (err) {
+    console.log(err);
+    res.send({success: 'false', message: 'Could not get the enrollments right now'})
+  })
+});
+
+
 router.post('/:miniCourseId', passport.authenticate('bearer'), ensure.ensureStudent(), function (req, res) {
   let miniCourseId = req.params.miniCourseId;
+
   models.Review.create({
     rating: (parseInt(req.body.rating)),
     description: req.body.description,
@@ -60,6 +79,7 @@ router.post('/:miniCourseId', passport.authenticate('bearer'), ensure.ensureStud
     console.log(err);
     res.send({success: 'error', message: "Could not get the review right now"});
   })
+
 });
 
 module.exports = router;
