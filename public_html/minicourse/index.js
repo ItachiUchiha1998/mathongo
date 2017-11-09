@@ -313,7 +313,7 @@ $(document).ready(function () {
                     </div>         
             `)
     }
-    
+
 $.ajax({
     url: "/api/minicourses/" + miniCourseId + "/material",
     method: 'GET',
@@ -324,14 +324,21 @@ $.ajax({
     console.log("Material api called");
     if (mat.length != 0) {
       console.log(mat);
-      materials.append("Materials: <br><br>");
+      materials.append(`<div class="col-sm-12" style="cursor: pointer;height: auto;padding: 20px;border-bottom: solid 2px #EEEEEE;"
+                            ">
+                        <div class="row" style="margin-bottom: 0px">
+                    
+                        `);
       for(var i=0;i<mat.length;i++) {
-        materials.append(`
-    <h4>`+ mat[i] + `</h4>
-<a href="/uploads/`+ miniCourseId+ `/`+ mat[i] +`" download>Download link</a>
-`
+        materials.append(`<br>
+          <div class="col-sm-10">
+    <h4  style=";margin-bottom: 7px; font-size: 18px;color: #444; font-weight: 500">`+ mat[i] + `</h4>
+<a  style=";margin-bottom: 7px; font-size: 18px; font-weight: 500" href="/uploads/`+ miniCourseId+ `/`+ mat[i] +`" download>Download link</a><br><br>
+</div>`
  );
       }
+
+      materials.append(`</div></div>`);
 
     }
     else {
