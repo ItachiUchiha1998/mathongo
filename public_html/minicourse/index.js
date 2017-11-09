@@ -313,15 +313,7 @@ $(document).ready(function () {
                     </div>         
             `)
     }
-
-  /*  materials.append(`
-      <h2>Materials</h2><br>
-    <h4>smo.pdf</h4>
-<a href="/uploads/`+ miniCourse.id+ `/smo-book.pdf" download>Download link</a>
-<p> href="/uploads/`+ miniCourse.id+ `/smo-book.pdf" download>Download link
- </p>
-`)*/
-
+    
 $.ajax({
     url: "/api/minicourses/" + miniCourseId + "/material",
     method: 'GET',
