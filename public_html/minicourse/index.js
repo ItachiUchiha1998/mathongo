@@ -348,23 +348,6 @@ $.ajax({
     console.log("Failed");
   });
 
-var folder = "../public_html/uploads/"+ miniCourse.id;
-
-$.ajax({
-    url : folder,
-    method: 'GET',
-    success: function (data) {
-        $(data).find("a").attr("href", function (i, val) {
-            if(val.match(/\.(jpe?g|png|gif|pdf)$/) ) { 
-                materials.append( "<h2>Materials<img src='"+ folder + "/smo-book." +val +"'>" );
-            } 
-        });
-    },
-    error : function(data){
-      console.log("Not found")
-    }
-});
-
     /*
       for (let i = miniCourse.materials.length - 1; i >= 0; i--) {
       if (!miniCourse.materials[i].description) {

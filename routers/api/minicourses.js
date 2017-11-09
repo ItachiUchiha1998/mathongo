@@ -347,7 +347,7 @@ router.get('/:id/material', passport.authenticate('bearer'), function (req, res)
   let miniCourseId = parseInt(req.params.id);
   
   fs.readdir('./public_html/uploads/' + miniCourseId, function(err, data){
-  if (err) throw err;
+  if (err) res.send(null);
   res.send(data);
 });
 
