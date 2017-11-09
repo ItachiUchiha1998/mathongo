@@ -4,11 +4,14 @@ const password = require('./../../utils/password');
 const passport = require('./../../passport/passporthandler');
 const ensure = require('./../../passport/passportutils');
 const bodyParser = require('body-parser');
-const multer = require('multer');
+var fs = require('fs');
+var express = require('express');
+var path = require('path');
 
 var checked = false;
 
 router.use(bodyParser.json());
+router.use(express.static(path.join(__dirname, 'public_html')));
 
 router.get('/', function (req, res) {
 
@@ -338,6 +341,16 @@ router.delete('/:id', passport.authenticate('bearer'), ensure.ensureAdmin(), fun
     console.log(err);
     res.send("Could not delete the minicourse");
   })
+});
+
+router.get('/:id/material', passport.authenticate('bearer'), function (req, res) {
+  let miniCourseId = parseInt(req.params.id);
+  
+  fs.readdir('./public_html/uploads/' + miniCourseId, function(err, data){
+  if (err) throw err;
+  res.send(data);
+});
+
 });
 
 module.exports = router;

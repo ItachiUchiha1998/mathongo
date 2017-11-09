@@ -313,6 +313,59 @@ $(document).ready(function () {
                     </div>         
             `)
     }
+
+  /*  materials.append(`
+      <h2>Materials</h2><br>
+    <h4>smo.pdf</h4>
+<a href="/uploads/`+ miniCourse.id+ `/smo-book.pdf" download>Download link</a>
+<p> href="/uploads/`+ miniCourse.id+ `/smo-book.pdf" download>Download link
+ </p>
+`)*/
+
+$.ajax({
+    url: "/api/minicourses/" + miniCourseId + "/material",
+    method: 'GET',
+    headers: {
+      "Authorization": "Bearer " + localStorage.getItem("token")
+    }
+  }).done(function (mat) {
+    console.log("Material api called");
+    if (mat.length != 0) {
+      console.log(mat);
+      materials.append("Materials: <br><br>");
+      for(var i=0;i<mat.length;i++) {
+        materials.append(`
+    <h4>`+ mat[i] + `</h4>
+<a href="/uploads/`+ miniCourseId+ `/`+ mat[i] +`" download>Download link</a>
+`
+ );
+      }
+
+    }
+    else {
+      materials.append("No Materials"); 
+    }
+  }).fail(function (object) {
+    console.log("Failed");
+  });
+
+var folder = "../public_html/uploads/"+ miniCourse.id;
+
+$.ajax({
+    url : folder,
+    method: 'GET',
+    success: function (data) {
+        $(data).find("a").attr("href", function (i, val) {
+            if(val.match(/\.(jpe?g|png|gif|pdf)$/) ) { 
+                materials.append( "<h2>Materials<img src='"+ folder + "/smo-book." +val +"'>" );
+            } 
+        });
+    },
+    error : function(data){
+      console.log("Not found")
+    }
+});
+
     /*
       for (let i = miniCourse.materials.length - 1; i >= 0; i--) {
       if (!miniCourse.materials[i].description) {

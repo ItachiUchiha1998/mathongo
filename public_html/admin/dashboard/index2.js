@@ -589,6 +589,8 @@ $(document).ready(function () {
 
                     categoryString += `</label><br><br>`;
 
+                    
+
                     $form.append(tutorString + classString + subjectString + courseString + categoryString);
                     $form.append(`<ol id="lessons-list"></ol>
                             <button class="btn buttons" id="add-lesson">Add Lesson</button>
