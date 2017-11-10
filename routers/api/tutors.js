@@ -5,8 +5,12 @@ const ensure = require('./../../passport/passportutils');
 var multer = require('multer');
 var bodyParser = require('body-parser');
 const passport = require('./../../passport/passporthandler');
+var fs = require('fs');
+var express = require('express');
+var path = require('path');
 
 router.use(bodyParser.json());
+router.use(express.static(path.join(__dirname, 'public_html')));
 
 router.get('/', function (req, res) {
   models.Tutor.findAll().then(function (tutors) {
@@ -155,6 +159,7 @@ router.get('/:id/:minicourse/:lesson', function (req, res) {
 router.post('/:id/addMiniCourse', passport.authenticate('bearer'), ensure.ensureAdmin(), function (req, res) {
   console.log("MiniCourse called");
   const tutorId = parseInt(req.params.id);
+
   models.MiniCourse.create({
     name: req.body.name,
     noOfLessons: req.body.noOfLessons,
@@ -205,6 +210,12 @@ router.post('/:id/addMiniCourse', passport.authenticate('bearer'), ensure.ensure
                     include: [models.Category]
                   }]
               }).then(function (miniCourseFinal) {
+                //console.log("*******************************" + miniCourseFinal.id);
+                  var dir = './public_html/uploads/' + miniCourseFinal.id;
+                  if (!fs.existsSync(dir)){
+                      fs.mkdirSync(dir);
+                      console.log("New folder made for course of ID " + miniCourseFinal.id);
+                  }
                 res.send({success: "true", data: miniCourseFinal});
               }).catch(function (err) {
                 console.log(err);
