@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('mathongo', 'muser', 'mathongopass', {
-  host: 'mathongo.cdkn595tutfq.ap-south-1.rds.amazonaws.com',
+const db = new Sequelize('mathongo', 'mathongotest', 'mathongo', {
+  host: 'mathongotest.cdkn595tutfq.ap-south-1.rds.amazonaws.com',
   port: 5432,
   dialect: 'postgres'
 });

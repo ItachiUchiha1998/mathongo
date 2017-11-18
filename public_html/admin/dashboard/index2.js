@@ -760,6 +760,7 @@ $(document).ready(function () {
                             }).done(function (lessons) {
                               $form.text('');
                               console.log(lessons);
+
                               if (lessons.success === 'true') {
                                 $form.text('');
                                 $msg.attr('class', 'text-success').text('Course and lessons Added');
@@ -778,6 +779,40 @@ $(document).ready(function () {
                             if (success === 'true') {
                               $form.text('');
                               $msg.attr('class', 'text-success').text('Course Added');
+                              /*
+                              var url = "/api/minicourses/"+miniCourseFinal.id+"/upload";
+                              $form.append(`
+                                Upload Material : <br>
+                                  <input type="file" name="material" id="material" multiple>
+                                  <button id="upload"> Upload </button>
+                                `);
+
+                              $upload = $('#upload');
+                              $upload.unbind('click');
+
+                              $upload.click(function () {
+                                console.log("wwww " + $('#material')[0].files[0]);
+                                $.ajax({
+                                    url: url,
+                                    data: {
+                                      material : $('#material').val(),
+                                      name : $('#material').val()
+                                    },
+                                    method: 'POST',
+                                    headers: {
+                                      "Authorization": "Bearer " + localStorage.getItem("token")
+                                    }
+                                  }
+                                ).done(function (data) {
+                                  console.log(data);
+                                  if (data.success === 'true') {
+                                    $msg.attr('class', 'text-success').text('Material Added');
+                                  } else {
+                                    $msg.attr('class', 'text-danger').text(data.msg);
+                                  }
+                                })
+                              })
+                              */
                             } else {
                               $msg.attr('class', 'text-danger').text(message);
                             }

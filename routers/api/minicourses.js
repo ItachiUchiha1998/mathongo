@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 var fs = require('fs');
 var express = require('express');
 var path = require('path');
-
+var multer = require('multer');
 var checked = false;
 
 router.use(bodyParser.json());
@@ -353,4 +353,25 @@ router.get('/:id/material', passport.authenticate('bearer'), function (req, res)
 
 });
 
+/*
+router.post('/:id/upload', passport.authenticate('bearer'), ensure.ensureAdmin(),function(req,res) {
+  let miniCourseId = parseInt(req.params.id);
+  
+  //var material = req.body.material;
+  //var material = 'string';
+  
+  var name = req.body.name;
+  var pdf = req.body.material;
+  var pdf = pdf.replace('data:application/pdf;base64,', '');
+  
+  console.log("Upload api called + " + miniCourseId);
+  fs.writeFile('./public_html/uploads/'+miniCourseId+'/'+name,pdf, 'base64', function(err){
+        if (err) {
+          return res.send(err);
+        }
+        res.send({success : 'true'});
+        console.log('file uploaded successfully');
+    });
+});
+*/
 module.exports = router;
