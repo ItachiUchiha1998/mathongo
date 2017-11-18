@@ -59,6 +59,11 @@ body, html {
     font-weight: 500;
 }
 
+#teacherImage {
+  width: 64px;
+  height: 64px;
+}
+
 .container-fluid{
     /*height: 100%;  !important;*/
     padding: 0;

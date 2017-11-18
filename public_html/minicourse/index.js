@@ -43,6 +43,13 @@ $(document).ready(function () {
       height: 15,
       readOnly: true
     });
+    $('#lower-rating').jRate({
+      rating: Math.floor(+miniCourse.rating),
+      startColor: '#FFD700',
+      endColor: '#FFD700',
+      height: 15,
+      readOnly: true
+    });
     $('#noOfReviews').text(miniCourse.noOfReviews + ' Reviews');
     $('#subject').text(miniCourse.tag.subject.subjectName);
     $('#className').text(miniCourse.tag.class.className);
