@@ -463,7 +463,7 @@ $.ajax({
 
     }
     else {
-      materials.append("No Materials"); 
+      materials.append(`<p class="col-sm-12 m-0" style="color: #999;font-weight: 500;border: none !important;padding:10px;font-size: 20px">No Materials</p>`); 
     }
   }).fail(function (object) {
     console.log("Failed");

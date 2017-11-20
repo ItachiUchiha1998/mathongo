@@ -3,6 +3,15 @@ body, html {
     width: 100%;
 }
 
+.highlight {
+  background-color : #FF0000;
+}
+
+a:hover {
+  text-decoration: none;
+  opacity: 0.85;
+}
+
 .container-fluid, .row {
     height: 100%;  !important;
     padding: 0px;
@@ -33,7 +42,6 @@ body, html {
     border-bottom-color: rgba(0,0,0,0.15);
     padding: 0px;
     margin-bottom: 40px;
-    padding-bottom: 5px;
 }
 
 .input-class{

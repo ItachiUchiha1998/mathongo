@@ -69,6 +69,7 @@ $(document).ready(function () {
                 window.location.replace(authToken.url)
             }else {
                 $('#error').text(authToken.message);
+                $('#loginPassword').addClass("highlight")
                 console.log("fail");
             }
         }).fail(function (err) {

@@ -2,6 +2,9 @@ body, html {
     background-color: whitesmoke;
     height: 100%; !important;
 }
+.image {
+    width: 100%;
+}
 .container{
     height: 100%;  !important;
 }
@@ -41,6 +44,11 @@ h5{
 
 .dropdown-menu{
     left:10%; !important;
+}
+
+#nameOfTheTeacher {
+    color : black;
+    font-weight: bold;
 }
 
 .jumbotron{

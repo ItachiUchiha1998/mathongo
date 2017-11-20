@@ -13,7 +13,8 @@ $('document').ready(function () {
     }).done(function (enrollments) {
         console.log(enrollments);
         const ul = $('#minicourses-list');
-        for (let i = 0; i < enrollments.length; i++) {
+        if(enrollments.length > 0) {
+            for (let i = 0; i < enrollments.length; i++) {
             let name = enrollments[i].minicourse.name.split(" ").join("-");
             let category = enrollments[i].minicourse.minicoursecategories[0].category.categoryName;
             console.log(category);
@@ -35,6 +36,13 @@ $('document').ready(function () {
                 '<div class="row tag-content"><span>' + enrollments[i].minicourse.medium + '</span></div> </div> </div> </div> </li>'
             )
         }
+        }
+        else {
+            ul.append(`
+                <p class="col-sm-12 m-0" style="color: #999;font-weight: 500;border: none !important;padding:10px;font-size: 20px">No Enrolled Courses</p>
+                `)
+        }
+        
     }).fail(function (object) {
         if (object.responseText === 'Unauthorized') {
             window.alert("Please Login First");

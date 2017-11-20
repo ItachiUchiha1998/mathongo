@@ -15,7 +15,8 @@ $('document').ready(function () {
     }).done(function (bookmarks) {
 
         const lectures = $('#lectures');
-        for (let i = 0; i < bookmarks.length; i++) {
+        if(bookmarks.length > 0) {
+            for (let i = 0; i < bookmarks.length; i++) {
             let name =  bookmarks[i].lesson.name.split(" ").join("-");
             lectures.append(`<div class="col-sm-12" style="cursor: pointer;height: auto;padding: 20px;border-bottom: solid 2px #EEEEEE;" onclick="window.location='/lessons/` + bookmarks[i].lesson.id + `/`+name+`'">
                         <div class="row" style="margin-bottom: 0">
@@ -37,7 +38,13 @@ $('document').ready(function () {
             
             
             `)
-        }
+        }            
+    } else {
+        lectures.append(`
+                <p class="col-sm-12 m-0" style="color: #999;font-weight: 500;border: none !important;padding:10px;font-size: 20px">No Bookmarks</p>
+            `)
+    }
+        
 
     }).fail(function (object) {
         if (object.responseText === 'Unauthorized') {

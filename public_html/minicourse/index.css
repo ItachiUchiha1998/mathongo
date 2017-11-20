@@ -6,6 +6,11 @@ body, html {
     height: 100%;  !important;
 }
 
+#nameOfTheTeacher {
+    color: black;
+    font-weight: bold;
+}
+
 *{
     word-wrap:break-word;
 }
@@ -509,4 +514,32 @@ textarea:-ms-input-placeholder {
 #enroll:hover{
     background-color: white;
     color: #1589EE;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+}
+
+.tooltips:hover .tooltiptext {
+    visibility: visible;
+    bottom: -7px;
+    left: 0px;  
+}
+.tooltips .tooltiptext::after {
+    /*content: "";*/
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+    margin-left: -60px;
 }
