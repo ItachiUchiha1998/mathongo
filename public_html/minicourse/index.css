@@ -543,3 +543,8 @@ textarea:-ms-input-placeholder {
     border-color: #555 transparent transparent transparent;
     margin-left: -60px;
 }
+
+ #subject , #difficulty , #className ,#medium , #relevance ,#miniCourseDuration,#noOfReviews,#upper-rating{
+    float: left;
+    position: relative;
+}
