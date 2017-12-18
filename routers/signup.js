@@ -5,7 +5,7 @@ const secret = require('./../secrets.json');
 
 router.post('/student', function (req, res,next) {
 
-    if (req.body.name === "" || req.body.email === "" || req.body.password === "") {
+    if (req.body.name === "" || req.body.email === "" || req.body.password === "" || req.body.contact === "") {
         res.send("Insufficient Details");
     }
 
@@ -15,18 +15,24 @@ router.post('/student', function (req, res,next) {
                 res.send({success : 'exists'});
             }
             else {
-                password.pass2hash(req.body.password).then(function (hash) {
-                models.UserLocal.create({
-                email: req.body.email,
-                password: hash,
-                role: "Student",
-                student: {
-                    name: req.body.name,
-                    email: req.body.email,
-                    contact: req.body.contact,
-                    class: req.body.class,
-                    pincode: req.body.pincode
-                }
+                models.Student.findOne({ where: {contact: req.body.contact} }).then(function(contact){
+                    if (contact) {
+                        console.log("duplicate");
+                        res.send({success : 'duplicate'});
+                    }
+                    else {
+                        password.pass2hash(req.body.password).then(function (hash) {
+                        models.UserLocal.create({
+                        email: req.body.email,
+                        password: hash,
+                        role: "Student",
+                        student: {
+                            name: req.body.name,
+                            email: req.body.email,
+                            contact: req.body.contact,
+                            class: req.body.class,
+                            pincode: req.body.pincode
+                        }
             }, {
                 include: [models.Student]
             }).then(function (userLocal) {
@@ -46,6 +52,8 @@ router.post('/student', function (req, res,next) {
             console.log(err);
             res.send({success: 'error'});
         })
+                    }
+                })
             }
     });
 });

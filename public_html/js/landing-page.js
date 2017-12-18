@@ -33,6 +33,10 @@ $(document).ready(function () {
                 $('#errorRegister').text("Already Enrolled");
                     console.log("fail");
             }
+            else if(student.success === 'duplicate') {
+                $('#errorRegister').text("Duplicate Mobile Number not allowed");
+                console.log("fail");
+            }
             else if (student.success === 'true') {
                 //console.log("yo");
                 $.post("/authorize", {
