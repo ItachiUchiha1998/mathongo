@@ -2,8 +2,8 @@ const Sequelize = require('sequelize');
 
 /*const db = new Sequelize('mathongo', 'mathongotest', 'mathongo', {
   host: 'mathongotest.cdkn595tutfq.ap-south-1.rds.amazonaws.com',*/
-  const db = new Sequelize('mathongo', 'muser', 'mathongopass', {
-  host: 'mathongo.cdkn595tutfq.ap-south-1.rds.amazonaws.com',
+  const db = new Sequelize('mathongo', 'testdb', 'mathongo', {
+  host: 'testdb.cdkn595tutfq.ap-south-1.rds.amazonaws.com',
   port: 5432,
   dialect: 'postgres'
 });
@@ -159,6 +159,12 @@ const Tag = db.define('tag', {
   id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
 });
 
+const ResetPasswordToken = db.define('resetpasswordtoken', {
+  email: Sequelize.STRING,
+  token: Sequelize.STRING,
+  expirationTime: Sequelize.BIGINT
+});
+
 MiniCourse.belongsTo(Tutor);
 Tutor.hasMany(MiniCourse);
 
@@ -246,7 +252,8 @@ module.exports = {
     Course,
     Tag,
     Category,
-    MiniCourseCategory
+    MiniCourseCategory,
+    ResetPasswordToken
   }
 };
 

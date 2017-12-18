@@ -136,7 +136,7 @@ input:-ms-input-placeholder {
 }
 
 #registerForm input {
-    width: 360px;
+  width: 360px;
   height: 40px;
   padding-left: 5px;
   border-radius: 2px;
@@ -145,6 +145,30 @@ input:-ms-input-placeholder {
 
 #registerButton {
     border-radius: 23.5px;   
+}
+
+#forgotPassword {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#forgotPasswordEmail {
+  top: 20px;
+  position: relative;
+  width: 360px;
+  height: 40px;
+  padding-left: 5px;
+  border-radius: 2px;
+  border: solid 2px #d8dde6
+}
+
+#SendEmail {
+  border-radius: 23.5px;
+}
+
+#forgotPasswordEmailDiv {
+  display: none;
 }
 
 /*.form-control:focus {*/

@@ -78,4 +78,21 @@ $(document).ready(function () {
             console.log(err);
         });
     })
+
+    $('#SendEmail').click(function () {
+        $.post("/authorize/forgot",{
+            email: $('#forgotPasswordEmail').val()
+        }).then(
+            console.log("email sent to " + $('#forgotPasswordEmail').val() )
+        ).catch((err) => {
+            console.log("fail");
+            console.log(err);
+        })
+    })
+
+    $('#forgotPassword').click(function() {
+        if (document.getElementById('forgotPasswordEmailDiv').style.display = 'none')
+            document.getElementById('forgotPasswordEmailDiv').style.display = 'block';
+    })
+
 });

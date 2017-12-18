@@ -2,6 +2,20 @@ const router = require('express').Router();
 const models = require('./../db/models').models;
 const uid = require('uid2');
 const passutils = require('./../utils/password');
+const nodemailer = require('nodemailer');
+const password = require('../utils/password');
+const secret = require('./../secrets.json');
+
+var crypto = require('crypto');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'mathongoanalyticstest@gmail.com',
+    pass: 'mathongo@123'
+  }
+});
+
 
 router.post('/', (req, res) => {
     models.UserLocal.findOne({
@@ -81,4 +95,97 @@ router.post('/', (req, res) => {
     });
 
 });
+
+router.post('/forgot', function(req,res) {
+  var email = req.body.email;
+  console.log(email);
+
+  models.UserLocal.findOne({
+        where: {
+            email: req.body.email,
+        }, include: [models.Student, models.Tutor, models.Admin]
+    }).then(function (user) {
+        if (!user) {
+            console.log("No such User")
+        } else {
+            console.log("Sending Password Reset mail...")
+            
+            var token =  crypto.randomBytes(100).toString('hex');
+
+            models.ResetPasswordToken.create({
+                email: email,
+                token: token,
+                expirationTime: Date.now() + 3600000,
+            });
+
+            var mailOptions = {
+              from: 'mathongoanalyticstest@gmail.com',
+              to: email,
+              subject: 'noreply',
+              text: 'Reset your password for Mathongo by clicking on this link => http://localhost:8080/authorize/reset/'+token
+            };
+
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+              }
+            });
+
+        }
+
+    });
+
+});
+
+router.get('/reset/:token', (req,res) => {
+
+    models.ResetPasswordToken.findOne({
+        where: { token: req.params.token  }
+    }).then(function(token) {
+        console.log("Reset Pass")
+        if (!token || Date.now() > token.expirationTime) {
+            console.log("Token not valid or Time Limit Exceeded")
+        } else {
+            console.log("Token for : " + token.email + " " + token.expirationTime)
+        }
+    })
+});
+
+router.post('/reset/:token', (req,res) => {
+
+    var token = req.params.token;
+
+    models.ResetPasswordToken.findOne({
+        where: { token: token  }
+    }).then(function(token) {
+        
+        console.log("Reset Pass to: " + req.body.password);
+        if (!token || Date.now() > token.expirationTime) {
+            res.send({success: false})
+            console.log("Token not valid or Time Limit Exceeded")
+        } else {
+                 password.pass2hash(req.body.password).then(function (hash) {
+                    models.UserLocal.find({ where: { email: token.email } })
+                    .then(function (record) {
+                        if (record) {
+                         record.update({
+                            password: hash
+                    })
+                    .then(function () {
+                        res.send({success: true})
+                        console.log("Password Updated");
+                       })
+                    }
+                })
+             }).catch(function (err) {
+                console.log(err);
+                res.send({success: 'error'});
+            })
+        }
+    }) ;
+
+});
+
 module.exports = router;
