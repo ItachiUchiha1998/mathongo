@@ -130,5 +130,91 @@ router.post('/admin', function (req, res) {
     }
 });
 
+router.post('/contact', (req,res) => {
+    
+    if( req.body.contact === "" ) {
+        res.send("Empty Field")
+    }
+
+    models.Student.findOne({ where: {contact: req.body.contact} }).then(function(contact){
+                    if (contact) {
+                        console.log("duplicate");
+                        res.send({success : 'duplicate'});
+                    }
+                    else {
+                        console.log("Unique")
+                        res.send({success : true});
+                    }
+                })
+
+});
+
+router.post('/newstudent' , (req,res) => {
+   if (req.body.name === "" || req.body.email === "" || req.body.password === "" || req.body.contact === "") {
+        res.send("Insufficient Details");
+    }
+    models.Student.findOne({ where: {contact: req.body.contact} }).then(function(contact){
+                if (contact) {
+                    console.log("duplicate");
+                    res.send({success : 'duplicate'});
+                }
+                else {
+                    password.pass2hash(req.body.password).then(function (hash) {
+                    models.UserLocal.create({
+                    email: req.body.email,
+                    password: hash,
+                    role: "Student",
+                    student: {
+                        name: req.body.name,
+                        email: req.body.email,
+                        contact: req.body.contact,
+                    }
+        }, {
+            include: [models.Student]
+        }).then(function (userLocal) {
+            console.log(userLocal.get());
+            console.log("=-----------------=");
+            console.log(userLocal.student.get());
+            if (userLocal) {
+                //res.send({success: 'true'});
+                res.send({student: userLocal.student.get()});
+            } else {
+                res.send({success: 'false'})
+            }
+        }).catch(function (err) {
+            console.log(err);
+            res.send({success: 'error'});
+        })
+    }).catch(function (err) {
+        console.log(err);
+        res.send({success: 'error'});
+    })
+}
+    })
+});
+
+router.put('/newstudent', (req,res) => {
+    if (req.body.class === "" || req.body.prefered_exam === "" || req.body.location === "") {
+        res.send("Insufficient Details");
+    }
+    models.Student.find({ where: { email: req.body.email } })
+    .then(function (record) {
+        if (record) {
+         record.update({
+            class: req.body.class,
+            location: req.body.location,
+            prefered_exam: req.body.prefered_exam 
+    })
+    .then(function (record) {
+        //res.send({student: record.get()});
+        res.send({success: true})
+        console.log("Updated");
+       })
+    }
+}).catch(function (err) {
+console.log(err);
+res.send({success: 'error'});
+})
+});
 
 module.exports = router;

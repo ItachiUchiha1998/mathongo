@@ -25,7 +25,9 @@ const Student = db.define('student', {
   email: {type: Sequelize.STRING, unique: true},
   class: Sequelize.STRING,
   contact: {type: Sequelize.STRING, unique: true},
-  pincode: Sequelize.STRING
+  pincode: Sequelize.STRING,
+  location: Sequelize.STRING,
+  prefered_exam: Sequelize.STRING
 });
 
 const Tutor = db.define('tutor', {
@@ -165,6 +167,7 @@ const ResetPasswordToken = db.define('resetpasswordtoken', {
   expirationTime: Sequelize.BIGINT
 });
 
+
 MiniCourse.belongsTo(Tutor);
 Tutor.hasMany(MiniCourse);
 
@@ -253,7 +256,8 @@ module.exports = {
     Tag,
     Category,
     MiniCourseCategory,
-    ResetPasswordToken
+    ResetPasswordToken,
+    
   }
 };
 
