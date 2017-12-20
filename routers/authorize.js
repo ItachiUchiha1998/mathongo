@@ -5,6 +5,7 @@ const passutils = require('./../utils/password');
 const nodemailer = require('nodemailer');
 const password = require('../utils/password');
 const secret = require('./../secrets.json');
+const sequelize = require('sequelize');
 
 var crypto = require('crypto');
 
@@ -201,6 +202,49 @@ router.post('/check/:refercode', (req,res) => {
             console.log(err);
             res.send({success: 'error'});
         })
+});
+
+router.post('/addcode/:contact' , (req,res) => {
+    var student_contact = req.params.contact;
+    var refercode = req.body.refercode;
+    models.ReferCode.find({ where: { refercode: refercode } })
+        .then(function(add) {
+            if (add) { 
+                add.update(
+                 {'hasRefered': sequelize.fn('array_append', sequelize.col('hasRefered'), req.params.contact)},
+                ).then(function() {
+                    res.send({success: true});
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            } else {
+                res.send({success: false});
+            }
+        }).catch(function(err) {
+            console.log(err);
+            res.send({success: 'error'});
+        })
+
+
+});
+
+router.post('/addcode', (req,res) => { // for testing purposes
+    models.ReferCode.create({
+        contact: req.body.contact,
+        refercode: req.body.refercode
+    }).then(function(data) {
+        if (data) {
+      res.send({
+        success: "true"
+      })
+    }
+    else {
+      res.send({success: "false"});
+    }
+    }).catch(function(err) {
+        res.send({success: false});
+        console.log(err);
+    })
 });
 
 module.exports = router;

@@ -169,7 +169,8 @@ const ResetPasswordToken = db.define('resetpasswordtoken', {
 
 const ReferCode = db.define('refercode', {
   contact: {type: Sequelize.STRING, unique: true},
-  refercode: {type: Sequelize.STRING, unique: true}
+  refercode: {type: Sequelize.STRING, unique: true},
+  hasRefered: Sequelize.ARRAY(Sequelize.STRING)
 });
 
 MiniCourse.belongsTo(Tutor);
