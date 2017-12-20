@@ -197,7 +197,7 @@ router.put('/newstudent', (req,res) => {
     if (req.body.class === "" || req.body.prefered_exam === "" || req.body.location === "") {
         res.send("Insufficient Details");
     }
-    models.Student.find({ where: { email: req.body.email } })
+    models.Student.find({ where: { contact: req.body.contact } })
     .then(function (record) {
         if (record) {
          record.update({
