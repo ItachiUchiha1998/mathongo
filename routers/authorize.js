@@ -187,7 +187,20 @@ router.post('/reset/:token', (req,res) => {
             })
         }
     }) ;
+});
 
+router.post('/check/:refercode', (req,res) => {
+    models.ReferCode.find({ where: { refercode: req.params.refercode } })
+        .then(function(code) {
+            if(code) {
+                res.send({success: true});
+            } else {
+                res.send({success: false});
+            }
+        }).catch(function(err) {
+            console.log(err);
+            res.send({success: 'error'});
+        })
 });
 
 module.exports = router;

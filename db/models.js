@@ -167,6 +167,10 @@ const ResetPasswordToken = db.define('resetpasswordtoken', {
   expirationTime: Sequelize.BIGINT
 });
 
+const ReferCode = db.define('refercode', {
+  contact: {type: Sequelize.STRING, unique: true},
+  refercode: {type: Sequelize.STRING, unique: true}
+});
 
 MiniCourse.belongsTo(Tutor);
 Tutor.hasMany(MiniCourse);
@@ -257,7 +261,7 @@ module.exports = {
     Category,
     MiniCourseCategory,
     ResetPasswordToken,
-    
+    ReferCode
   }
 };
 

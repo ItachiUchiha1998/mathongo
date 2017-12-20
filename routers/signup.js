@@ -212,8 +212,8 @@ router.put('/newstudent', (req,res) => {
        })
     }
 }).catch(function (err) {
-console.log(err);
-res.send({success: 'error'});
+    console.log(err);
+    res.send({success: 'error'});
 })
 });
 
