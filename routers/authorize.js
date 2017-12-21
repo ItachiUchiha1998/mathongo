@@ -350,4 +350,22 @@ router.post('/isunlocked', passport.authenticate('bearer') , (req,res) => {
         })
 });
 
+router.post('/referexists/:id', (req,res) => {
+    models.ReferCode.find({ where: { studentId: req.params.id } })
+        .then(function(code) {
+            if (code) {
+                if (code.refercode != null) {
+                    res.send({ success: true })
+                } else {
+                    res.send({ success: false })
+                }
+            } else {
+                res.send({success: 'Id not found'})
+            }
+        }).catch(function(err) {
+           console.log(err);
+           res.send({success: 'error'}); 
+        })
+});
+
 module.exports = router;
