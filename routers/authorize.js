@@ -273,9 +273,9 @@ router.post('/check/:refercode', (req,res) => {
     models.ReferCode.find({ where: { refercode: req.params.refercode } })
         .then(function(code) {
             if(code) {
-                res.send({success: true});
+                res.send({success: 'Exists'});
             } else {
-                res.send({success: false});
+                res.send({success: 'Not Exists'});
             }
         }).catch(function(err) {
             console.log(err);
