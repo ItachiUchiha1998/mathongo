@@ -6,6 +6,8 @@ const nodemailer = require('nodemailer');
 const password = require('../utils/password');
 const secret = require('./../secrets.json');
 const sequelize = require('sequelize');
+const passport = require('../passport/passporthandler');
+const ensure = require('../passport/passportutils');
 
 var crypto = require('crypto');
 
@@ -21,7 +23,7 @@ var transporter = nodemailer.createTransport({
 router.post('/', (req, res) => {
     models.UserLocal.findOne({
         where: {
-            email: req.body.email,
+            contact: req.body.contact,
         }, include: [models.Student, models.Tutor, models.Admin]
     }).then(function (user) {
         if (!user) {
@@ -204,14 +206,13 @@ router.post('/check/:refercode', (req,res) => {
         })
 });
 
-router.post('/addcode/:contact' , (req,res) => {
-    var student_contact = req.params.contact;
+router.post('/addcode' , passport.authenticate('bearer') , (req,res) => {
     var refercode = req.body.refercode;
     models.ReferCode.find({ where: { refercode: refercode } })
         .then(function(add) {
             if (add) { 
                 add.update(
-                 {'hasRefered': sequelize.fn('array_append', sequelize.col('hasRefered'), req.params.contact)},
+                 {'hasRefered': sequelize.fn('array_append', sequelize.col('hasRefered'), req.user.user.id )},
                 ).then(function() {
                     res.send({success: true});
                 }).catch(function(err) {
@@ -228,18 +229,16 @@ router.post('/addcode/:contact' , (req,res) => {
 
 });
 
-router.post('/addcode', (req,res) => { // for testing purposes
+router.post('/addrefercode', (req,res) => {
     models.ReferCode.create({
-        contact: req.body.contact,
+        studentId: req.body.studentId,
         refercode: req.body.refercode
     }).then(function(data) {
         if (data) {
-      res.send({
-        success: "true"
-      })
+      res.send({ success: true })
     }
     else {
-      res.send({success: "false"});
+      res.send({success: false});
     }
     }).catch(function(err) {
         res.send({success: false});

@@ -138,12 +138,12 @@ router.post('/contact', (req,res) => {
 
     models.Student.findOne({ where: {contact: req.body.contact} }).then(function(contact){
                     if (contact) {
-                        console.log("duplicate");
-                        res.send({success : 'duplicate'});
+                        console.log("not Unique");
+                        res.send({success : 'Not unique'});
                     }
                     else {
                         console.log("Unique")
-                        res.send({success : true});
+                        res.send({success : 'Unique'});
                     }
                 })
 
