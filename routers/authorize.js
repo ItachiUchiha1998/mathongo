@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
         if (!user) {
             return res.send({
                 success: "false",
-                message: "Incorrect Email"
+                message: "Incorrect Contact"
             })
         }
         // console.log(user.get());
@@ -213,6 +213,7 @@ router.post('/addcode' , passport.authenticate('bearer') , (req,res) => {
             if (add) { 
                 add.update(
                  {'hasRefered': sequelize.fn('array_append', sequelize.col('hasRefered'), req.user.user.id )},
+                 { 'size': sequelize.fn('array_length', sequelize.col('hasRefered'), 1) }
                 ).then(function() {
                     res.send({success: true});
                 }).catch(function(err) {
@@ -244,6 +245,34 @@ router.post('/addrefercode', (req,res) => {
         res.send({success: false});
         console.log(err);
     })
+});
+
+router.get('/isunlocked', passport.authenticate('bearer') , (req,res) => {
+    models.UnlockCourses.find({ where: { studentId: req.user.user.id } })
+        .then(function(student) {
+            if (student) {
+                res.send({ allowed: student.isUnlocked })
+            } else {
+                res.send({success: 'Not Present'})
+            }
+        })
+});
+
+router.post('/isunlocked', passport.authenticate('bearer') , (req,res) => {
+    models.UnlockCourses.find({ where: { studentId: req.user.user.id } })
+        .then(function(student) {
+            if (student) {
+                if (student.isUnlocked == false) {
+                    student.update({
+                        isUnlocked: true
+                    })
+                } else {
+                    res.send({success: 'Already True' });
+                }
+            } else {
+                res.send({success: 'Not Present'})
+            }
+        })
 });
 
 module.exports = router;

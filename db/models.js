@@ -170,13 +170,13 @@ const ResetPasswordToken = db.define('resetpasswordtoken', {
 const ReferCode = db.define('refercode', {
   studentId: {type: Sequelize.STRING, unique: true},
   refercode: {type: Sequelize.STRING, unique: true},
-  hasRefered: Sequelize.ARRAY(Sequelize.STRING)
+  hasRefered: Sequelize.ARRAY(Sequelize.STRING),
+  size: Sequelize.INTEGER
 });
 
 const UnlockCourses = db.define('unlockcourses', {
   studentId: {type: Sequelize.STRING, unique: true},
-  sizeofHasRefered: Sequelize.INTEGER,
-  Unlocked: Sequelize.BOOLEAN
+  isUnlocked: {type: Sequelize.BOOLEAN, defaultValue: false}
 });
 
 MiniCourse.belongsTo(Tutor);
@@ -268,7 +268,8 @@ module.exports = {
     Category,
     MiniCourseCategory,
     ResetPasswordToken,
-    ReferCode
+    ReferCode,
+    UnlockCourses
   }
 };
 
