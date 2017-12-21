@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 /*const db = new Sequelize('mathongo', 'mathongotest', 'mathongo', {
   host: 'mathongotest.cdkn595tutfq.ap-south-1.rds.amazonaws.com',*/
-  const db = new Sequelize('mathongo', 'testdb', 'mathongo', {
+  const db = new Sequelize('mathongo1', 'testdb', 'mathongo', {
   host: 'testdb.cdkn595tutfq.ap-south-1.rds.amazonaws.com',
   port: 5432,
   dialect: 'postgres'
