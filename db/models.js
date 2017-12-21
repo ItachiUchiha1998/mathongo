@@ -49,6 +49,7 @@ const UserLocal = db.define('userlocal', {
   id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
   email: {type: Sequelize.STRING},
   password: Sequelize.STRING,
+  contact: {type: Sequelize.STRING, unique: true},
   role: Sequelize.STRING
 });
 

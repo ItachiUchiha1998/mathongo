@@ -26,6 +26,7 @@ router.post('/student', function (req, res,next) {
                         email: req.body.email,
                         password: hash,
                         role: "Student",
+                        contact: req.body.contact,
                         student: {
                             name: req.body.name,
                             email: req.body.email,
@@ -190,7 +191,7 @@ router.post('/newstudent' , (req,res) => {
         res.send({success: 'error'});
     })
 }
-    })
+ })
 });
 
 router.put('/newstudent', (req,res) => {
@@ -200,21 +201,21 @@ router.put('/newstudent', (req,res) => {
     models.Student.find({ where: { contact: req.body.contact } })
     .then(function (record) {
         if (record) {
-         record.update({
-            class: req.body.class,
-            location: req.body.location,
-            prefered_exam: req.body.prefered_exam 
+             record.update({
+                class: req.body.class,
+                location: req.body.location,
+                prefered_exam: req.body.prefered_exam 
+        })
+        .then(function (record) {
+            //res.send({student: record.get()});
+            res.send({success: true})
+            console.log("Updated");
+           })
+        }
+    }).catch(function (err) {
+        console.log(err);
+        res.send({success: 'error'});
     })
-    .then(function (record) {
-        //res.send({student: record.get()});
-        res.send({success: true})
-        console.log("Updated");
-       })
-    }
-}).catch(function (err) {
-    console.log(err);
-    res.send({success: 'error'});
-})
 });
 
 module.exports = router;
