@@ -21,7 +21,7 @@ var transporter = nodemailer.createTransport({
 
 
 router.post('/', (req, res) => {
-    if (req.body.email != "" ) {
+    if (req.body.contact == "" ) {
         models.UserLocal.findOne({
         where: {
             email: req.body.email,
