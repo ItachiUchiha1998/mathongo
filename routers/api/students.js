@@ -119,4 +119,15 @@ router.get('/:id', function (req, res) {
     })
 });
 
+router.post('refered/:id', (req,res) => {
+  models.ReferCode.findOne({
+    where: { id: req.params.id }
+  }).then(function(refer) {
+    res.send({ refer: refer.hasRefered });
+  }).catch(function(err) {
+    res.send({success: false });
+    console.log(err);
+  })
+});
+
 module.exports = router;

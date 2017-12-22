@@ -19,7 +19,6 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-
 router.post('/', (req, res) => {
     if (req.body.email != "" ) {
         models.UserLocal.findOne({
@@ -87,8 +86,6 @@ router.post('/', (req, res) => {
             console.log(err);
             res.send({success: 'false'});
         });
-
-
     }).catch(function (err) {
         console.log("***********");
         console.log("user error")
@@ -102,13 +99,15 @@ router.post('/', (req, res) => {
             }, include: [models.Student, models.Tutor, models.Admin]
         }).then(function (user) {
             if (!user) {
-                return res.send({
-                    success: "false",
-                    message: "Incorrect Contact"
-                })
-            }
-            // console.log(user.get());
-            passutils.compare2hash(req.body.password, user.password).then(function (match) {
+                models.Student.findOne({
+                    where: { contact: req.body.contact }
+                }).then(function(stud){
+                    if (stud) {
+                        models.UserLocal.findOne({
+                            where: { email: stud.email }
+                        }).then(function(search){
+                            
+                passutils.compare2hash(req.body.password, search.password).then(function (match) {
                 if (match) {
                     models.AuthToken.create({
                         token: uid(30),
@@ -121,7 +120,7 @@ router.post('/', (req, res) => {
                             return res.send({
                                 success: 'true',
                                 url: '/library',
-                                name: user.student.name,
+                                name: user.name,//user.student.name,
                                 token: authToken.token
                             })
                         }
@@ -147,11 +146,9 @@ router.post('/', (req, res) => {
                                 message: 'Incorrect User'
                             })
                         }
-
-
                     }).catch(function (err) {
                         console.log(err);
-                        res.send({success: 'false'})
+                        res.send({success: 'err'})
                     })
                 } else {
                     res.send({success: 'false',
@@ -164,16 +161,80 @@ router.post('/', (req, res) => {
                 res.send({success: 'false'});
             });
 
-
-        }).catch(function (err) {
+                        }).catch(function(err){
+                            console.log(err);
+                            res.send({message: 'error'})
+                        })
+                    } else {
+                        return res.send('Incorrect contact');
+                    }
+                }).catch(function(err){
+                    console.log(err);
+                    return res.send('error');
+                })
+            } else {
+            console.log(user.get());
+            passutils.compare2hash(req.body.password, user.password).then(function (match) {
+                if (match) {
+                    models.AuthToken.create({
+                        token: uid(30),
+                        role: user.role,
+                        userlocalId: user.id
+                    }).then(function (authToken) {
+                        console.log("***************")
+                        console.log(authToken)
+                        if (user.student) {
+                            return res.send({
+                                success: 'true',
+                                url: '/library',
+                                name: user.name,//user.student.name,
+                                token: authToken.token
+                            })
+                        }
+                        else if (user.tutor) {
+                            return res.send({
+                                success: 'true',
+                                name: user.tutor.name,
+                                url: '/library',
+                                token: authToken.token
+                            })
+                        }
+                        else if (user.admin) {
+                            return res.send({
+                                success: 'true',
+                                url: '/admin/dashboard',
+                                name: user.admin.name,
+                                token: authToken.token
+                            })
+                        }
+                        else {
+                            return res.send({
+                                success: 'false',
+                                message: 'Incorrect User'
+                            })
+                        }
+                    }).catch(function (err) {
+                        console.log(err);
+                        res.send({success: 'err'})
+                    })
+                } else {
+                    res.send({success: 'false',
+                    message: 'Incorrect Password'});
+                }
+            }).catch(function (err) {
+                console.log("************")
+                console.log("pass error")
+                console.log(err);
+                res.send({success: 'false'});
+            });
+        }}).catch(function (err) {
             console.log("***********");
             console.log("user error")
             console.log(err);
-            res.send({success: 'false'});
+            res.send({success: 'falsee'});
         });
-    }
-    
 
+    }
 });
 
 router.post('/forgot', function(req,res) {
@@ -366,6 +427,17 @@ router.post('/referexists/:id', (req,res) => {
            console.log(err);
            res.send({success: 'error'}); 
         })
+});
+
+router.post('refered/:id', (req,res) => {
+  models.ReferCode.findOne({
+    where: { id: req.params.id }
+  }).then(function(refer) {
+    res.send({ refer: refer.hasRefered });
+  }).catch(function(err) {
+    res.send({success: false });
+    console.log(err);
+  })
 });
 
 module.exports = router;
