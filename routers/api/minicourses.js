@@ -27,7 +27,10 @@ router.get('/', function (req, res) {
       {
         model: models.MiniCourseCategory,
         include: [models.Category]
-      }]
+      }],
+      order: [
+            ['id', 'DESC'],
+        ],
   }).then(function (miniCourses) {
     res.send(miniCourses);
   }).catch(function (err) {
