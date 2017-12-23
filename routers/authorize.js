@@ -42,6 +42,8 @@ router.post('/', (req, res) => {
                 }).then(function (authToken) {
                     console.log("***************")
                     console.log(authToken)
+                    console.log("***************")
+                    console.log(user.student)
                     if (user.student) {
                         return res.send({
                             success: 'true',
@@ -99,74 +101,61 @@ router.post('/', (req, res) => {
             }, include: [models.Student, models.Tutor, models.Admin]
         }).then(function (user) {
             if (!user) {
+                console.log("Old user")
                 models.Student.findOne({
                     where: { contact: req.body.contact }
                 }).then(function(stud){
                     if (stud) {
                         models.UserLocal.findOne({
-                            where: { email: stud.email }
-                        }).then(function(search){
-                            
-                passutils.compare2hash(req.body.password, search.password).then(function (match) {
-                if (match) {
-                    models.AuthToken.create({
-                        token: uid(30),
-                        role: user.role,
-                        userlocalId: user.id
-                    }).then(function (authToken) {
-                        console.log("***************")
-                        console.log(authToken)
-                        if (user.student) {
-                            return res.send({
-                                success: 'true',
-                                url: '/library',
-                                name: user.name,//user.student.name,
-                                token: authToken.token
-                            })
-                        }
-                        else if (user.tutor) {
-                            return res.send({
-                                success: 'true',
-                                name: user.tutor.name,
-                                url: '/library',
-                                token: authToken.token
-                            })
-                        }
-                        else if (user.admin) {
-                            return res.send({
-                                success: 'true',
-                                url: '/admin/dashboard',
-                                name: user.admin.name,
-                                token: authToken.token
-                            })
-                        }
-                        else {
-                            return res.send({
-                                success: 'false',
-                                message: 'Incorrect User'
-                            })
-                        }
-                    }).catch(function (err) {
-                        console.log(err);
-                        res.send({success: 'err'})
-                    })
-                } else {
-                    res.send({success: 'false',
-                    message: 'Incorrect Password'});
-                }
-            }).catch(function (err) {
-                console.log("************")
-                console.log("pass error")
-                console.log(err);
-                res.send({success: 'false'});
-            });
+                            where: { email: stud.email },
+                            include: [models.Student, models.Tutor, models.Admin]
+                        }).then(function(user){
+                passutils.compare2hash(req.body.password, user.password).then(function (match) {
+            if (match) {
+                models.AuthToken.create({
+                    token: uid(30),
+                    role: user.role,
+                    userlocalId: user.id
+                }).then(function (authToken) {
+                    console.log("***************")
+                    console.log(authToken)
+                    console.log("***************")
+                    console.log(user.student)
+                    if (user.student) {
+                        return res.send({
+                            success: 'true',
+                            url: '/library',
+                            name: user.student.name,
+                            token: authToken.token
+                        })
+                    }
+                    else {
+                        return res.send({
+                            success: 'false',
+                            message: 'Incorrect User'
+                        })
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                    res.send({success: 'false'})
+                })
+            } else {
+                res.send({success: 'false',
+                message: 'Incorrect Password'});
+            }
+        }).catch(function (err) {
+            console.log("************")
+            console.log("pass error")
+            console.log(err);
+            res.send({success: 'false'});
+        });
 
                         }).catch(function(err){
                             console.log(err);
                             res.send({message: 'error'})
                         })
                     } else {
-                        return res.send('Incorrect contact');
+                        return res.send({message:'Incorrect contact'});
                     }
                 }).catch(function(err){
                     console.log(err);
