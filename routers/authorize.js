@@ -336,13 +336,13 @@ router.post('/check/:refercode', (req,res) => {
         })
 });
 
-router.post('/addcode' , passport.authenticate('bearer') , (req,res) => {
+router.post('/addcode' /*passport.authenticate('bearer')*/ , (req,res) => {
     var refercode = req.body.refercode;
     models.ReferCode.find({ where: { refercode: refercode } })
         .then(function(add) {
             if (add) { 
                 add.update(
-                 {'hasRefered': sequelize.fn('array_append', sequelize.col('hasRefered'), req.user.user.id)},
+                 {'hasRefered': sequelize.fn('array_append', sequelize.col('hasRefered'), req.params.id)},
                 ).then(function() {
                     add.update(
                         { 'size': sequelize.fn('array_length', sequelize.col('hasRefered'),1) }
