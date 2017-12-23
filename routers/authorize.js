@@ -336,16 +336,37 @@ router.post('/check/:refercode', (req,res) => {
         })
 });
 
-router.post('/addcode' , passport.authenticate('bearer') , (req,res) => {
+router.post('/addcode/:id' , /*passport.authenticate('bearer') ,*/ (req,res) => {
     var refercode = req.body.refercode;
     models.ReferCode.find({ where: { refercode: refercode } })
         .then(function(add) {
             if (add) { 
                 add.update(
-                 {'hasRefered': sequelize.fn('array_append', sequelize.col('hasRefered'), req.user.user.id )},
-                 { 'size': sequelize.fn('array_length', sequelize.col('hasRefered'), 1) }
+                 {'hasRefered': sequelize.fn('array_append', sequelize.col('hasRefered'), /*req.user.user.id*/req.params.id )},
                 ).then(function() {
-                    res.send({success: true});
+                    add.update(
+                        { 'size': sequelize.fn('array_length', sequelize.col('hasRefered'),1) }
+                    ).then(function(){
+                    models.ReferCode.find({where: {refercode: refercode}})
+                        .then(function(check){
+                            if (check.size >= 2) {
+                                models.UnlockCourses.findOne({
+                                    where: { studentId: check.studentId }
+                                }).then(function(unlock){
+                                    models.UnlockCourses.create(
+                                        {   
+                                            studentId: check.studentId ,
+                                            isUnlocked: true
+                                        }
+                                    ).then(function(){
+                                        res.send({message: 'Unlocked'})
+                                    })
+                                })
+                            } else {
+                                res.send({message: 'Not Unlocked'})
+                            }
+                        })
+                    })
                 }).catch(function(err) {
                     console.log(err);
                 });
@@ -386,7 +407,7 @@ router.get('/isunlocked', passport.authenticate('bearer') , (req,res) => {
         })
 });
 
-router.post('/isunlocked', passport.authenticate('bearer') , (req,res) => {
+/*router.post('/isunlocked', passport.authenticate('bearer') , (req,res) => {
     models.UnlockCourses.find({ where: { studentId: req.user.user.id } })
         .then(function(student) {
             if (student) {
@@ -401,7 +422,7 @@ router.post('/isunlocked', passport.authenticate('bearer') , (req,res) => {
                 res.send({success: 'Not Present'})
             }
         })
-});
+});*/
 
 router.post('/referexists/:id', (req,res) => {
     models.ReferCode.find({ where: { studentId: req.params.id } })
