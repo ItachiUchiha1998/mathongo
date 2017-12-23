@@ -119,7 +119,7 @@ router.get('/:id', function (req, res) {
     })
 });
 
-router.post('refered/:id', (req,res) => {
+router.post('/refered/:id', (req,res) => {
   models.ReferCode.findOne({
     where: { id: req.params.id }
   }).then(function(refer) {

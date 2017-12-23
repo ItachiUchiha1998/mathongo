@@ -418,7 +418,7 @@ router.post('/referexists/:id', (req,res) => {
         })
 });
 
-router.post('refered/:id', (req,res) => {
+/*router.post('/refered/:id', (req,res) => {
   models.ReferCode.findOne({
     where: { id: req.params.id }
   }).then(function(refer) {
@@ -427,6 +427,6 @@ router.post('refered/:id', (req,res) => {
     res.send({success: false });
     console.log(err);
   })
-});
+});*/
 
 module.exports = router;
