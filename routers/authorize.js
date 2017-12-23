@@ -44,6 +44,7 @@ router.post('/', (req, res) => {
                     console.log(authToken)
                     console.log("***************")
                     console.log(user.student)
+                    res.send({student: user.student})
                     if (user.student) {
                         return res.send({
                             success: 'true',
@@ -121,6 +122,7 @@ router.post('/', (req, res) => {
                     console.log(authToken)
                     console.log("***************")
                     console.log(user.student)
+                    res.send({student: user.student})
                     if (user.student) {
                         return res.send({
                             success: 'true',
@@ -172,6 +174,7 @@ router.post('/', (req, res) => {
                     }).then(function (authToken) {
                         console.log("***************")
                         console.log(authToken)
+                        res.send({student: user.student})
                         if (user.student) {
                             return res.send({
                                 success: 'true',
