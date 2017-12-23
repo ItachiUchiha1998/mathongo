@@ -336,7 +336,7 @@ router.post('/check/:refercode', (req,res) => {
         })
 });
 
-router.post('/addcode' /*passport.authenticate('bearer')*/ , (req,res) => {
+router.post('/addcode/:id' , (req,res) => {
     var refercode = req.body.refercode;
     models.ReferCode.find({ where: { refercode: refercode } })
         .then(function(add) {
@@ -371,7 +371,7 @@ router.post('/addcode' /*passport.authenticate('bearer')*/ , (req,res) => {
                     console.log(err);
                 });
             } else {
-                res.send({success: false});
+                res.send({success: 'fallse'});
             }
         }).catch(function(err) {
             console.log(err);
