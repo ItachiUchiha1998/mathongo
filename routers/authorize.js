@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
         passutils.compare2hash(req.body.password, user.password).then(function (match) {
             if (match) {
                 models.AuthToken.create({
-                    token: uid(30),
+                    token: uid(30), // 9999535385 // asdf
                     role: user.role,
                     userlocalId: user.id
                 }).then(function (authToken) {
@@ -50,7 +50,8 @@ router.post('/', (req, res) => {
                             success: 'true',
                             url: '/library',
                             name: user.student.name,
-                            token: authToken.token
+                            token: authToken.token,
+                            student: user.student
                         })
                     }
                     else if (user.tutor) {
@@ -122,13 +123,13 @@ router.post('/', (req, res) => {
                     console.log(authToken)
                     console.log("***************")
                     console.log(user.student)
-                    res.send({student: user.student})
                     if (user.student) {
                         return res.send({
                             success: 'true',
                             url: '/library',
                             name: user.student.name,
-                            token: authToken.token
+                            token: authToken.token,
+                            student: user.student
                         })
                     }
                     else {
@@ -174,13 +175,13 @@ router.post('/', (req, res) => {
                     }).then(function (authToken) {
                         console.log("***************")
                         console.log(authToken)
-                        res.send({student: user.student})
                         if (user.student) {
                             return res.send({
                                 success: 'true',
                                 url: '/library',
                                 name: user.name,//user.student.name,
-                                token: authToken.token
+                                token: authToken.token,
+                                student: user.student
                             })
                         }
                         else if (user.tutor) {
