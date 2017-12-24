@@ -354,7 +354,6 @@ router.post('/addcode/:id' , (req,res) => {
                                 models.UnlockCourses.findOne({
                                     where: { studentId: check.studentId }
                                 }).then(function(unlock){
-
                                     unlock.update(
                                         {   
                                             studentId: check.studentId ,
@@ -430,13 +429,9 @@ router.post('/referexists/:id', (req,res) => {
     models.ReferCode.find({ where: { studentId: req.params.id } })
         .then(function(code) {
             if (code) {
-                if (code.refercode != null) {
-                    res.send({ success: true })
-                } else {
-                    res.send({ success: false })
-                }
+                    res.send({ success: "Refer Exists" })
             } else {
-                res.send({success: 'Id not found'})
+                res.send({success: 'Refer Not Exists'})
             }
         }).catch(function(err) {
            console.log(err);
