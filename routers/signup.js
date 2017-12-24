@@ -176,7 +176,7 @@ router.post('/newstudent' , (req,res) => {
             console.log(userLocal.get());
             console.log("=-----------------=");
             models.UnlockCourses.create({
-                studentId: userLocal.id
+                studentId: userLocal.student.id
             })
             console.log(userLocal.student.get());
             if (userLocal) {
