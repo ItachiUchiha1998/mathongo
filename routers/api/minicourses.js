@@ -356,6 +356,15 @@ router.get('/:id/material', passport.authenticate('bearer'), function (req, res)
 
 });
 
+router.get('/resources', passport.authenticate('bearer'), function (req, res) {
+  fs.readdir('./public_html/resources/' , function(err, data){
+    if (err) return res.send(null);
+      res.send(data);
+  });
+
+});
+
+
 /*
 router.post('/:id/upload', passport.authenticate('bearer'), ensure.ensureAdmin(),function(req,res) {
   let miniCourseId = parseInt(req.params.id);
