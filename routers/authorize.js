@@ -454,4 +454,17 @@ router.post('/referexists/:id', (req,res) => {
   })
 });*/
 
+router.get('/getcode/:id',(req,res) => {
+    models.ReferCode.find({where: { studentId: req.params.id }})
+        .then(function(code) {
+            res.send({
+                refercode: code.refercode,
+                hasRefered: code.hasRefered
+            })
+        }).catch(function(err){
+            console.log(err);
+            res.send({success: 'error'})
+        })
+})
+
 module.exports = router;
