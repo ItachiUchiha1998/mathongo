@@ -356,14 +356,53 @@ router.get('/:id/material', passport.authenticate('bearer'), function (req, res)
 
 });
 
-router.get('/resources', passport.authenticate('bearer'), function (req, res) {
-  fs.readdir('./public_html/resources/' , function(err, data){
-    if (err) return res.send(null);
-      res.send(data);
-  });
+router.get('/resources', function (req, res) {
 
+  fs.readdir('./public_html/resources/Formula/Class XI/' , function(err, data){
+    
+    if (err) return res.send({success: 'error'});
+    
+    fs.readdir('./public_html/resources/Formula/Class XII/' , function(err, data1){
+        if (err) return res.send({success: 'error'});
+
+        fs.readdir('./public_html/resources/Previous Year/JEE Advance/' , function(err, data2){
+            if (err) return res.send({success: 'error'});
+                        
+            fs.readdir('./public_html/resources/Previous Year/JEE MAINS/' , function(err, data3){
+                if (err) return res.send({success: 'error'});
+                            
+                fs.readdir('./public_html/resources/Previous Year/Other Exams/' , function(err, data4){
+                    if (err) return res.send({success: 'error'});
+                            
+                    fs.readdir('./public_html/resources/NCERT Solutions/Class XI/' , function(err, data5){
+                        if (err) return res.send({success: 'error'});
+                            
+                        fs.readdir('./public_html/resources/NCERT Solutions/Class XII/' , function(err, data6){
+                            if (err) return res.send({success: 'error'});
+                            
+                            fs.readdir('./public_html/resources/Question Bank/Class XI/' , function(err, data7){
+                                if (err) return res.send({success: 'error'});
+                            
+                                fs.readdir('./public_html/resources/Question Bank/Class XII/' , function(err, data8){
+                                    if (err) return res.send({success: 'error'});
+                            
+                                    res.send({Formula: {Class_11: data, Class_12: data1 },
+                                        Previous_Year: { JEE_Advanced: data2,JEE_MAINS: data3,Other_Exams: data4  },
+                                        NCERT_Solutions: { Class_11: data5,Class_12: data6 },
+                                        Question_Bank: { Class_11: data7, Class_12: data8 } });
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        })
+
+      })
+
+  })
+    
 });
-
 
 /*
 router.post('/:id/upload', passport.authenticate('bearer'), ensure.ensureAdmin(),function(req,res) {
