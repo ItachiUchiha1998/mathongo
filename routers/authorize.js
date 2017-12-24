@@ -354,7 +354,8 @@ router.post('/addcode/:id' , (req,res) => {
                                 models.UnlockCourses.findOne({
                                     where: { studentId: check.studentId }
                                 }).then(function(unlock){
-                                    models.UnlockCourses.create(
+
+                                    unlock.update(
                                         {   
                                             studentId: check.studentId ,
                                             isUnlocked: true
