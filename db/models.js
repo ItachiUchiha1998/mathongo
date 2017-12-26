@@ -27,7 +27,8 @@ const Student = db.define('student', {
   contact: {type: Sequelize.STRING, unique: true},
   pincode: Sequelize.STRING,
   location: Sequelize.STRING,
-  prefered_exam: Sequelize.STRING
+  prefered_exam: Sequelize.STRING,
+  mode_of_study: Sequelize.STRING
 });
 
 const Tutor = db.define('tutor', {
