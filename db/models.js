@@ -181,6 +181,11 @@ const UnlockCourses = db.define('unlockcourses', {
   isUnlocked: {type: Sequelize.BOOLEAN, defaultValue: false}
 });
 
+const BannerImage = db.define('bannerimage', {
+  Bannerid: {type: Sequelize.STRING, unique: true},
+  imageUrl: Sequelize.STRING
+})
+
 MiniCourse.belongsTo(Tutor);
 Tutor.hasMany(MiniCourse);
 
@@ -271,7 +276,8 @@ module.exports = {
     MiniCourseCategory,
     ResetPasswordToken,
     ReferCode,
-    UnlockCourses
+    UnlockCourses,
+    BannerImage
   }
 };
 

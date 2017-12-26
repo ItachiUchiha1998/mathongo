@@ -512,5 +512,18 @@ router.get('/resources', function (req, res) {
     
 });
 
+router.get('/banner', (req,res) => {
+    models.BannerImage.findOne()
+        .then(function(banner){
+            if (banner) {
+                res.send({success: 'true'})
+            } else {
+                res.send({success: 'false'})    
+            }
+        }).catch(function(err){
+            console.log(err)
+            res.send({success: 'error'})
+        })
+});
 
 module.exports = router;
