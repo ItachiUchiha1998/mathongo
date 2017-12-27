@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const models = require('../db/models').models;
+const sequelize = require('sequelize');
 const password = require('../utils/password');
 const secret = require('./../secrets.json');
 
@@ -198,7 +199,7 @@ router.post('/newstudent' , (req,res) => {
 });
 
 router.put('/newstudent/:contact', (req,res) => {
-    if (req.body.class === "" || req.body.prefered_exam === "" || req.body.prefered_exam === "" || req.body.location === "" || req.body.mode_of_study === "" ) {
+    if (req.body.class === "" || req.body.prefered_exam === "" || req.body.location === "" || req.body.mode_of_study === "" ) {
         res.send({success:"Insufficient Details"});
     }
     models.Student.find({ where: { contact: req.params.contact } })
@@ -207,7 +208,7 @@ router.put('/newstudent/:contact', (req,res) => {
              record.update({
                 class: req.body.class,
                 location: req.body.location,
-                prefered_exam: req.body.prefered_exam,
+                prefered_exam: sequelize.fn('array_append', sequelize.col('prefered_exam'), req.body.prefered_exam),
                 mode_of_study: req.body.mode_of_study,
                 pincode: req.body.pincode
         })
