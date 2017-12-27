@@ -198,7 +198,7 @@ router.post('/newstudent' , (req,res) => {
 });
 
 router.put('/newstudent', (req,res) => {
-    if (req.body.class === "" || req.body.prefered_exam === "" || req.body.location === "" || req.body.mode_of_study === "" ) {
+    if (req.body.class === "" || req.body.prefered_exam === "" || req.body.prefered_exam === "" || req.body.location === "" || req.body.mode_of_study === "" ) {
         res.send({success:"Insufficient Details"});
     }
     models.Student.find({ where: { contact: req.body.contact } })
@@ -208,7 +208,8 @@ router.put('/newstudent', (req,res) => {
                 class: req.body.class,
                 location: req.body.location,
                 prefered_exam: req.body.prefered_exam,
-                mode_of_study: req.body.mode_of_study 
+                mode_of_study: req.body.mode_of_study,
+                pincode: req.body.pincode
         })
         .then(function (record) {
             //res.send({student: record.get()});
