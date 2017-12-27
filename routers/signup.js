@@ -199,7 +199,7 @@ router.post('/newstudent' , (req,res) => {
 });
 
 router.put('/newstudent/:contact', (req,res) => {
-    if (req.body.class === "" || req.body.prefered_exam === "" || req.body.location === "" || req.body.mode_of_study === "" ) {
+    if (req.body.class === "" || req.body.prefered_exam === "" || req.body.mode_of_study === "" ) {
         res.send({success:"Insufficient Details"});
     }
     models.Student.find({ where: { contact: req.params.contact } })
