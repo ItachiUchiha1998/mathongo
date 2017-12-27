@@ -494,10 +494,15 @@ router.get('/resources', function (req, res) {
                                 fs.readdir('./public_html/resources/Question Bank/Class XII/' , function(err, data8){
                                     if (err) return res.send({success: 'error'});
                             
-                                    res.send({Formula: {Class_11: data, Class_12: data1 },
-                                        Previous_Year: { JEE_Advanced: data2,JEE_MAINS: data3,Other_Exams: data4  },
-                                        NCERT_Solutions: { Class_11: data5,Class_12: data6 },
-                                        Question_Bank: { Class_11: data7, Class_12: data8 } });
+                                    fs.readdir('./public_html/resources/TextBooks/' , function(err, data9){
+                                        if (err) return res.send({success: 'error'});
+                                
+                                        res.send({Formula: {Class_11: data, Class_12: data1 },
+                                            Previous_Year: { JEE_Advanced: data2,JEE_MAINS: data3,Other_Exams: data4  },
+                                            NCERT_Solutions: { Class_11: data5,Class_12: data6 },
+                                            Question_Bank: { Class_11: data7, Class_12: data8 },
+                                            TextBooks: data9 });
+                                    })
                                 })
                             })
                         })
