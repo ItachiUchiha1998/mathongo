@@ -27,7 +27,7 @@ const Student = db.define('student', {
   contact: {type: Sequelize.STRING, unique: true},
   pincode: Sequelize.STRING,
   location: Sequelize.STRING,
-  prefered_exam: Sequelize.STRING,
+  prefered_exam: Sequelize.ARRAY(Sequelize.STRING),
   mode_of_study: Sequelize.STRING
 });
 
@@ -183,7 +183,8 @@ const UnlockCourses = db.define('unlockcourses', {
 
 const BannerImage = db.define('bannerimage', {
   Bannerid: {type: Sequelize.STRING, unique: true},
-  imageUrl: Sequelize.STRING
+  imageUrl: Sequelize.STRING,
+  onclicklink: Sequelize.STRING
 })
 
 MiniCourse.belongsTo(Tutor);

@@ -521,6 +521,7 @@ router.get('/banner', (req,res) => {
     models.BannerImage.findOne()
         .then(function(banner){
             if (banner) {
+                res.send({banner: banner.get()})
                 res.send({success: 'true'})
             } else {
                 res.send({success: 'false'})    
