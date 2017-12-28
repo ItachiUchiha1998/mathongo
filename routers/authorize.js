@@ -88,13 +88,13 @@ router.post('/', (req, res) => {
             console.log("************")
             console.log("pass error")
             console.log(err);
-            res.send({success: 'false'});
+            res.send({success: 'error'});
         });
     }).catch(function (err) {
         console.log("***********");
         console.log("user error")
         console.log(err);
-        res.send({success: 'false'});
+        res.send({success: 'error'});
     });
     } else {
             models.UserLocal.findOne({
@@ -150,7 +150,7 @@ router.post('/', (req, res) => {
             console.log("************")
             console.log("pass error")
             console.log(err);
-            res.send({success: 'false'});
+            res.send({success: 'error'});
         });
 
                         }).catch(function(err){
@@ -218,13 +218,13 @@ router.post('/', (req, res) => {
                 console.log("************")
                 console.log("pass error")
                 console.log(err);
-                res.send({success: 'false'});
+                res.send({success: 'error'});
             });
         }}).catch(function (err) {
             console.log("***********");
             console.log("user error")
             console.log(err);
-            res.send({success: 'falsee'});
+            res.send({success: 'error'});
         });
 
     }
@@ -262,7 +262,7 @@ router.post('/forgot', function(req,res) {
             transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                     console.log(error);
-                    res.send({success: false})
+                    res.send({success: 'error'})
                 } else {
                     console.log('Email sent: ' + info.response);
                     res.send({success: true})
