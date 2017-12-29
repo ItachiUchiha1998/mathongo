@@ -187,11 +187,11 @@ router.post('/newstudent' , (req,res) => {
             }
         }).catch(function (err) {
             console.log(err);
-            res.send({success: 'error'});
+            res.send({success: 'error',message: err});
         })
     }).catch(function (err) {
         console.log(err);
-        res.send({success: 'error'});
+        res.send({success: 'error',message: err});
     })
 }
  })
@@ -219,7 +219,7 @@ router.put('/newstudent/:contact', (req,res) => {
         }
     }).catch(function (err) {
         console.log(err);
-        res.send({success: 'error'});
+        res.send({success: 'error',message: err});
     })
 });
 

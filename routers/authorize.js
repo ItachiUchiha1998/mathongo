@@ -460,7 +460,7 @@ router.get('/getcode/:id',(req,res) => {
             })
         }).catch(function(err){
             console.log(err);
-            res.send({success: 'error'})
+            res.send({success: 'error',message: err})
         })
 });
 
