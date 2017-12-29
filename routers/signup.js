@@ -181,17 +181,17 @@ router.post('/newstudent' , (req,res) => {
             })
             console.log(userLocal.student.get());
             if (userLocal) {
-                res.send({student: userLocal.student.get()});
+                res.send({student: userLocal.student.get(),success: true});
             } else {
                 res.send({success: 'false'})
             }
         }).catch(function (err) {
             console.log(err);
-            res.send({success: 'error',message: err});
+            res.send({success: 'error',message: 'userlocal error'});
         })
     }).catch(function (err) {
         console.log(err);
-        res.send({success: 'error',message: err});
+        res.send({success: 'error',message: 'contact error'});
     })
 }
  })
@@ -219,7 +219,7 @@ router.put('/newstudent/:contact', (req,res) => {
         }
     }).catch(function (err) {
         console.log(err);
-        res.send({success: 'error',message: err});
+        res.send({success: 'error',message: 'contact error'});
     })
 });
 

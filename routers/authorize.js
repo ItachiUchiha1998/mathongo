@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
                     console.log(user.student)
                     if (user.student) {
                         return res.send({
-                            success: 'true',
+                            success: true,
                             url: '/library',
                             name: user.student.name,
                             token: authToken.token,
@@ -56,7 +56,7 @@ router.post('/', (req, res) => {
                     }
                     else if (user.tutor) {
                         return res.send({
-                            success: 'true',
+                            success: true,
                             name: user.tutor.name,
                             url: '/library',
                             token: authToken.token
@@ -125,11 +125,11 @@ router.post('/', (req, res) => {
                     console.log(user.student)
                     if (user.student) {
                         return res.send({
-                            success: 'true',
+                            success: true,
                             url: '/library',
                             name: user.student.name,
                             token: authToken.token,
-                            student: user.student
+                            student: user.student,
                         })
                     }
                     else {
@@ -155,7 +155,7 @@ router.post('/', (req, res) => {
 
                         }).catch(function(err){
                             console.log(err);
-                            res.send({message: 'error'})
+                            res.send({message: 'not found'})
                         })
                     } else {
                         return res.send({message:'Incorrect contact'});
@@ -177,7 +177,7 @@ router.post('/', (req, res) => {
                         console.log(authToken)
                         if (user.student) {
                             return res.send({
-                                success: 'true',
+                                success: true,
                                 url: '/library',
                                 name: user.name,//user.student.name,
                                 token: authToken.token,
@@ -186,7 +186,7 @@ router.post('/', (req, res) => {
                         }
                         else if (user.tutor) {
                             return res.send({
-                                success: 'true',
+                                success: true,
                                 name: user.tutor.name,
                                 url: '/library',
                                 token: authToken.token
@@ -317,7 +317,7 @@ router.post('/reset/:token', (req,res) => {
                 })
              }).catch(function (err) {
                 console.log(err);
-                res.send({success: 'error',message: err});
+                res.send({success: 'error',message: 'password error'});
             })
         }
     }) ;
@@ -333,7 +333,7 @@ router.post('/check/:refercode', (req,res) => {
             }
         }).catch(function(err) {
             console.log(err);
-            res.send({success: 'error',message: err});
+            res.send({success: 'error',message: 'refercode not found error'});
         })
 });
 
@@ -370,14 +370,14 @@ router.post('/addcode/:id' , (req,res) => {
                     })
                 }).catch(function(err) {
                     console.log(err);
-                    res.send({success: 'error',message: err});
+                    res.send({success: 'error',message: 'hasRefered error'});
                 });
             } else {
                 res.send({success: 'false'});
             }
         }).catch(function(err) {
             console.log(err);
-            res.send({success: 'error',message: err});
+            res.send({success: 'error',message: 'update error'});
         })
 });
 
@@ -393,7 +393,7 @@ router.post('/addrefercode', (req,res) => {
       res.send({success: false});
     }
     }).catch(function(err) {
-        res.send({success: 'error',message: err});
+        res.send({success: 'error',message: 'refercode error'});
         console.log(err);
     })
 });
@@ -402,7 +402,7 @@ router.get('/isunlocked', passport.authenticate('bearer') , (req,res) => {
     models.UnlockCourses.find({ where: { studentId: req.user.user.id } })
         .then(function(student) {
             if (student) {
-                res.send({ allowed: student.isUnlocked })
+                res.send({ allowed: student.isUnlocked,success: true })
             } else {
                 res.send({success: 'Not Present'})
             }
@@ -436,7 +436,7 @@ router.post('/referexists/:id', (req,res) => {
             }
         }).catch(function(err) {
            console.log(err);
-           res.send({success: 'error',message: err}); 
+           res.send({success: 'error',message: 'refercode error'}); 
         })
 });
 
@@ -456,11 +456,12 @@ router.get('/getcode/:id',(req,res) => {
         .then(function(code) {
             res.send({
                 refercode: code.refercode,
-                hasRefered: code.hasRefered
+                hasRefered: code.hasRefered,
+                success: true
             })
         }).catch(function(err){
             console.log(err);
-            res.send({success: 'error',message: err})
+            res.send({success: 'error',message: 'get refercode error'})
         })
 });
 
@@ -501,7 +502,7 @@ router.get('/resources', function (req, res) {
                                             Previous_Year: { JEE_Advanced: data2,JEE_MAINS: data3,Other_Exams: data4  },
                                             NCERT_Solutions: { Class_11: data5,Class_12: data6 },
                                             Question_Bank: { Class_11: data7, Class_12: data8 },
-                                            TextBooks: data9 });
+                                            TextBooks: data9,success:true });
                                     })
                                 })
                             })
