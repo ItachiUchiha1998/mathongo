@@ -22,7 +22,7 @@ const Sequelize = require('sequelize');
 const Student = db.define('student', {
   id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
   name: Sequelize.STRING,
-  email: {type: Sequelize.STRING, unique: true},
+  email: {type: Sequelize.STRING,/* unique: true*/},
   class: Sequelize.STRING,
   contact: {type: Sequelize.STRING, unique: true},
   pincode: Sequelize.STRING,

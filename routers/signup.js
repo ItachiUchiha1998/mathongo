@@ -181,7 +181,6 @@ router.post('/newstudent' , (req,res) => {
             })
             console.log(userLocal.student.get());
             if (userLocal) {
-                //res.send({success: 'true'});
                 res.send({student: userLocal.student.get()});
             } else {
                 res.send({success: 'false'})

@@ -317,7 +317,7 @@ router.post('/reset/:token', (req,res) => {
                 })
              }).catch(function (err) {
                 console.log(err);
-                res.send({success: 'error'});
+                res.send({success: 'error',message: err});
             })
         }
     }) ;
@@ -333,7 +333,7 @@ router.post('/check/:refercode', (req,res) => {
             }
         }).catch(function(err) {
             console.log(err);
-            res.send({success: 'error'});
+            res.send({success: 'error',message: err});
         })
 });
 
@@ -370,13 +370,14 @@ router.post('/addcode/:id' , (req,res) => {
                     })
                 }).catch(function(err) {
                     console.log(err);
+                    res.send({success: 'error',message: err});
                 });
             } else {
-                res.send({success: 'fallse'});
+                res.send({success: 'false'});
             }
         }).catch(function(err) {
             console.log(err);
-            res.send({success: 'error'});
+            res.send({success: 'error',message: err});
         })
 });
 
@@ -392,7 +393,7 @@ router.post('/addrefercode', (req,res) => {
       res.send({success: false});
     }
     }).catch(function(err) {
-        res.send({success: false});
+        res.send({success: 'error',message: err});
         console.log(err);
     })
 });
@@ -435,7 +436,7 @@ router.post('/referexists/:id', (req,res) => {
             }
         }).catch(function(err) {
            console.log(err);
-           res.send({success: 'error'}); 
+           res.send({success: 'error',message: err}); 
         })
 });
 
