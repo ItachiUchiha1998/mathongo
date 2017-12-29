@@ -522,15 +522,28 @@ router.get('/banner', (req,res) => {
     models.BannerImage.findOne()
         .then(function(banner){
             if (banner) {
-                res.send({banner: banner.get()})
-                res.send({success: 'true'})
+                res.send({banner: banner.get(),success: true})
             } else {
-                res.send({success: 'false'})    
+                res.send({success: false,message: 'Not Found'})    
             }
         }).catch(function(err){
             console.log(err)
-            res.send({success: 'error'})
+            res.send({success: 'error',message: 'banner error'})
         })
+});
+
+router.get('/version', (req,res) => {
+    models.ApkVersion.findOne()
+        .then(function(version){
+            if (version) {
+                res.send({success: true,version: version.get()})
+            } else {
+                res.send({success: false,message: 'Not Found'})
+            }
+        }).catch(function(err) {
+            console.log(err);
+            res.send({success: 'error',message: 'version error '})
+        });
 });
 
 module.exports = router;

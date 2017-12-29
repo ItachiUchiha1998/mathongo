@@ -186,7 +186,11 @@ const BannerImage = db.define('bannerimage', {
   Bannerid: {type: Sequelize.STRING, unique: true},
   imageUrl: Sequelize.STRING,
   onclicklink: Sequelize.STRING
-})
+});
+
+const ApkVersion = db.define('apkversion', {
+  version_code : Sequelize.STRING
+});
 
 MiniCourse.belongsTo(Tutor);
 Tutor.hasMany(MiniCourse);
@@ -279,7 +283,8 @@ module.exports = {
     ResetPasswordToken,
     ReferCode,
     UnlockCourses,
-    BannerImage
+    BannerImage,
+    ApkVersion
   }
 };
 
