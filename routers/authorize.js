@@ -102,7 +102,7 @@ router.post('/', (req, res) => {
                 contact: req.body.contact,
             }, include: [models.Student, models.Tutor, models.Admin]
         }).then(function (user) {
-            if (!user) {
+            if (!user) {/*
                 console.log("Old user")
                 models.Student.findOne({
                     where: { contact: req.body.contact }
@@ -164,6 +164,8 @@ router.post('/', (req, res) => {
                     console.log(err);
                     return res.send('error');
                 })
+           */
+           res.send({success:false,message: 'User Not Found'})
             } else {
             console.log(user.get());
             passutils.compare2hash(req.body.password, user.password).then(function (match) {
@@ -547,3 +549,4 @@ router.get('/version', (req,res) => {
 });
 
 module.exports = router;
+
