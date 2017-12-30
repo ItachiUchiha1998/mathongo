@@ -165,6 +165,7 @@ router.post('/newstudent' , (req,res) => {
                     models.UserLocal.create({
                     email: req.body.email,
                     password: hash,
+                    contact: req.body.contact,
                     role: "Student",
                     student: {
                         name: req.body.name,
