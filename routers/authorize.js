@@ -548,7 +548,7 @@ router.get('/version', (req,res) => {
         });
 });
 
-router.get('/changepassword', (req,res) => {
+router.post('/changepassword', (req,res) => {
     
     password.pass2hash(req.body.password).then(function (hash) {
                     models.UserLocal.find({ where: { contact: req.body.contact } })
