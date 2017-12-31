@@ -548,5 +548,27 @@ router.get('/version', (req,res) => {
         });
 });
 
+router.get('/changepassword', (req,res) => {
+    
+    password.pass2hash(req.body.password).then(function (hash) {
+                    models.UserLocal.find({ where: { contact: req.body.contact } })
+                    .then(function (record) {
+                        if (record) {
+                         record.update({
+                            password: hash
+                    })
+                    .then(function () {
+                        res.send({success: true})
+                        console.log("Password Updated");
+                       })
+                    }
+                })
+             }).catch(function (err) {
+                console.log(err);
+                res.send({success: 'error',message: 'password error'});
+        })
+
+});
+
 module.exports = router;
 
